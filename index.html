@@ -90,12 +90,16 @@
             width: fit-content;
             font-weight: bold;
         }
-        .btn:hover {
-            background-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+        /* 避免手機上按鈕也有 sticky hover */
+        @media (hover: hover) {
+            .btn:hover {
+                background-color: var(--accent);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+            }
         }
         .btn:active {
+            background-color: var(--accent);
             transform: translateY(0);
         }
 
@@ -138,11 +142,24 @@
             color: #555;
             transition: all 0.2s;
             line-height: 1.5;
+            -webkit-tap-highlight-color: transparent; /* 移除手機預設點擊灰底 */
         }
-        .option-card:hover {
+
+        /* === 修正：僅在支援滑鼠 Hover 的裝置顯示懸停效果 === */
+        @media (hover: hover) {
+            .option-card:hover {
+                border-color: var(--accent);
+                background: #fff8f0;
+                transform: translateX(5px);
+                color: var(--accent);
+            }
+        }
+
+        /* === 新增：手機觸控的 Active 效果 (取代 Hover) === */
+        .option-card:active {
             border-color: var(--accent);
             background: #fff8f0;
-            transform: translateX(5px);
+            transform: scale(0.98); /* 點擊時微縮，增加回饋感 */
             color: var(--accent);
         }
 
