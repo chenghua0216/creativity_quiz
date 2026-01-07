@@ -155,11 +155,19 @@
             }
         }
 
-        /* === 新增：手機觸控的 Active 效果 (取代 Hover) === */
+        /* === 手機觸控的 Active 效果 === */
         .option-card:active {
             border-color: var(--accent);
             background: #fff8f0;
-            transform: scale(0.98); /* 點擊時微縮，增加回饋感 */
+            transform: scale(0.98); 
+            color: var(--accent);
+        }
+
+        /* === 新增：選中狀態 (用於延遲期間保持高亮) === */
+        .option-card.selected {
+            border-color: var(--accent);
+            background: #fff8f0;
+            transform: scale(0.98);
             color: var(--accent);
         }
 
@@ -522,6 +530,7 @@
     // === 程式邏輯 ===
     let currentQ = 0;
     let scores = { C: 0, R: 0, D: 0, A: 0, T: 0, E: 0 };
+    let isTransitioning = false; // 防止重複點擊的旗標
 
     function startQuiz() {
         document.getElementById('start-screen').style.display = 'none';
@@ -543,23 +552,39 @@
             const btn = document.createElement('div');
             btn.className = 'option-card';
             btn.innerText = opt.text;
-            btn.onclick = () => handleAnswer(opt.scores);
+            // 傳入 btn 元素本身，以便添加 .selected 樣式
+            btn.onclick = () => handleAnswer(opt.scores, btn);
             area.appendChild(btn);
         });
     }
 
-    function handleAnswer(points) {
-        // 累加分數
-        for(let key in points) {
-            scores[key] += points[key];
+    function handleAnswer(points, element) {
+        // 如果正在轉場中，忽略點擊
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        // 立即給予視覺回饋 (加入 selected class)
+        if (element) {
+            element.classList.add('selected');
         }
 
-        currentQ++;
-        if (currentQ < questions.length) {
-            renderQuestion();
-        } else {
-            showResult();
-        }
+        // 延遲 300 毫秒後再切換題目
+        setTimeout(() => {
+            // 累加分數
+            for(let key in points) {
+                scores[key] += points[key];
+            }
+
+            currentQ++;
+            if (currentQ < questions.length) {
+                renderQuestion();
+            } else {
+                showResult();
+            }
+            
+            // 解除鎖定
+            isTransitioning = false;
+        }, 300);
     }
 
     function showResult() {
