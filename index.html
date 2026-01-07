@@ -121,6 +121,12 @@
             transition: width 0.4s ease;
         }
 
+        /* 題目容器：加入透明度轉場，解決切換時的閃爍與殘留選取問題 */
+        #question-container {
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
         .question-text {
             font-size: 1.3rem;
             font-weight: bold;
@@ -563,28 +569,40 @@
         if (isTransitioning) return;
         isTransitioning = true;
 
-        // 立即給予視覺回饋 (加入 selected class)
+        // 1. 選取狀態 (橘色高亮)
         if (element) {
             element.classList.add('selected');
         }
 
-        // 延遲 300 毫秒後再切換題目
+        // 2. 稍微停頓讓使用者看到選擇 (200ms)
         setTimeout(() => {
-            // 累加分數
-            for(let key in points) {
-                scores[key] += points[key];
-            }
-
-            currentQ++;
-            if (currentQ < questions.length) {
-                renderQuestion();
-            } else {
-                showResult();
-            }
+            const qContainer = document.getElementById('question-container');
             
-            // 解除鎖定
-            isTransitioning = false;
-        }, 300);
+            // 3. 淡出舊題目
+            qContainer.style.opacity = '0';
+            
+            // 4. 等待淡出動畫結束 (300ms)
+            setTimeout(() => {
+                // 累加分數
+                for(let key in points) {
+                    scores[key] += points[key];
+                }
+
+                currentQ++;
+                if (currentQ < questions.length) {
+                    renderQuestion(); // 渲染新題目
+                    
+                    // 5. 淡入新題目
+                    requestAnimationFrame(() => {
+                        qContainer.style.opacity = '1';
+                    });
+                } else {
+                    showResult(); // 顯示結果
+                }
+                
+                isTransitioning = false;
+            }, 300); // 配合 CSS transition 時間
+        }, 200); // 點擊後的視覺暫留時間
     }
 
     function showResult() {
