@@ -63,6 +63,7 @@
             transition: transform 0.2s;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             padding: 5px; /* 增加一點內距，讓圖片完整呈現不貼邊 */
+            cursor: pointer; /* 改為手指游標，提示可點擊 */
         }
         .spectrum-icon-item:hover {
             transform: scale(1.1);
@@ -73,6 +74,52 @@
             width: 100%;
             height: 100%;
             object-fit: contain; /* 確保圖片完整顯示，不會被裁切 */
+        }
+
+        /* Modal 樣式 (新增) */
+        .modal {
+            display: none; /* 預設隱藏 */
+            position: fixed; 
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.6); 
+            animation: fadeIn 0.3s;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            width: 85%; 
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: left;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            padding: 5px;
+        }
+        .close-modal:hover {
+            color: #333;
+        }
+        .modal-text {
+            font-size: 1.1rem; 
+            line-height: 1.6; 
+            color: #444;
+            margin-top: 10px;
         }
 
         /* 按鈕通用樣式 */
@@ -259,6 +306,7 @@
             .option-card { padding: 15px; }
             .spectrum-icons { gap: 10px; }
             .spectrum-icon-item { width: 50px; height: 50px; }
+            .modal-content { width: 80%; padding: 20px; } /* 手機版 Modal 調整 */
         }
     </style>
 </head>
@@ -269,8 +317,8 @@
         <header>
             <h1>CREATE 創造力亮能光譜</h1>
             <div class="subtitle">
-                一起展開內在創造力的探索旅程，<br>
-                分析你獨一無二的創造力性格。<br>
+                一起展開內在創造力的探索旅程。<br>
+                透過情境觀察，分析你獨一無二的創造力性格。<br>
                 <span style="font-size: 0.8em; color: #999;">(結合 108 課綱核心素養分析)</span>
             </div>
         </header>
@@ -278,27 +326,27 @@
         <!-- 六個圖案橫放區域，取代原本的燈泡 -->
         <div class="spectrum-icons">
             <!-- C: Consciousness -->
-            <div class="spectrum-icon-item" title="覺察 (Consciousness)：「覺察」是創造力的起點。它超越了單純的看見，而是指能自我感官調節，細膩地接收內在的情緒波動以及外在環境的細微變化。這是一種勇於面對未知體驗的心理準備狀態。">
+            <div class="spectrum-icon-item" data-desc="覺察 (Consciousness)：「覺察」是創造力的起點。它超越了單純的看見，而是指能自我感官調節，細膩地接收內在的情緒波動以及外在環境的細微變化。這是一種勇於面對未知體驗的心理準備狀態。" title="覺察 (Consciousness)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Consciousness.png?raw=true" alt="覺察力">
             </div>
             <!-- R: Realization -->
-            <div class="spectrum-icon-item" title="表達 (Realization)：「表達」是內在轉化為外在的過程。這不僅僅是說話或畫畫，而是將無形的想法、複雜的情緒或抽象的觀點，透過適當的媒介（文字、圖像、肢體、聲音等）賦予形式，且能以獨特的方式與世界對話。">
+            <div class="spectrum-icon-item" data-desc="表達 (Realization)：「表達」是內在轉化為外在的過程。這不僅僅是說話或畫畫，而是將無形的想法、複雜的情緒或抽象的觀點，透過適當的媒介（文字、圖像、肢體、聲音等）賦予形式，且能以獨特的方式與世界對話。" title="表達 (Realization)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Realization%20.png?raw=true" alt="表達力">
             </div>
             <!-- D: Engagement (Drive) -->
-            <div class="spectrum-icon-item" title="驅動 (Engagement)：「驅動」關乎創造力的續航力。它不是為了外在獎勵獲肯定而做，而是源於內在的熱情、好奇或意義感。這是一種穩定的心理支持力量，讓我們在面對挑戰時，能自我激勵，甚至進入心流狀態的能力。">
+            <div class="spectrum-icon-item" data-desc="驅動 (Engagement)：「驅動」關乎創造力的續航力。它不是為了外在獎勵獲肯定而做，而是源於內在的熱情、好奇或意義感。這是一種穩定的心理支持力量，讓我們在面對挑戰時，能自我激勵，甚至進入心流狀態的能力。" title="驅動 (Engagement)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Engagement.png?raw=true" alt="驅動力">
             </div>
             <!-- A: Alignment -->
-            <div class="spectrum-icon-item" title="合作 (Alignment)：「合作」是將個人創造力擴展為集體智慧的關鍵。Alignment 原意為「校準」、「對齊」，這意味著合作不僅是分工，更是頻率的調和。我們需要理解他人的觀點，建立關係，並在保有自我的同時與團隊目標達成一致。這是同理心與社會技巧的綜合展現。">
+            <div class="spectrum-icon-item" data-desc="合作 (Alignment)：「合作」是將個人創造力擴展為集體智慧的關鍵。Alignment 原意為「校準」、「對齊」，這意味著合作不僅是分工，更是頻率的調和。我們需要理解他人的觀點，建立關係，並在保有自我的同時與團隊目標達成一致。這是同理心與社會技巧的綜合展現。" title="合作 (Alignment)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Alignment%20.png?raw=true" alt="合作力">
             </div>
             <!-- T: Trial -->
-            <div class="spectrum-icon-item" title="探索 (Trial)：「探索」是對現狀的挑戰與可能性的開拓。允許自己好奇與冒險，也有勇氣脫離舒適圈，去問「為什麼？」和「如果...會怎樣？」。這項能力著重於發散性思考以及對失敗的寬容，因為嘗試過程就存在價值。">
+            <div class="spectrum-icon-item" data-desc="探索 (Trial)：「探索」是對現狀的挑戰與可能性的開拓。允許自己好奇與冒險，也有勇氣脫離舒適圈，去問「為什麼？」和「如果...會怎樣？」。這項能力著重於發散性思考以及對失敗的寬容，因為嘗試過程就存在價值。" title="探索 (Trial)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Trial.png?raw=true" alt="探索力">
             </div>
             <!-- E: Execution -->
-            <div class="spectrum-icon-item" title="實踐 (Execution)：「實踐」是創造力旅程的終點，也是新循環的起點。將學習過程的啟發落實為真實生活中的選擇與行動，需要執行力、規劃力以及將抽象概念應用於現實生活的能力。">
+            <div class="spectrum-icon-item" data-desc="實踐 (Execution)：「實踐」是創造力旅程的終點，也是新循環的起點。將學習過程的啟發落實為真實生活中的選擇與行動，需要執行力、規劃力以及將抽象概念應用於現實生活的能力。" title="實踐 (Execution)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Execution.png?raw=true" alt="實踐力">
             </div>
         </div>
@@ -351,6 +399,14 @@
         </div>
 
         <button class="btn" onclick="location.reload()">重新測驗</button>
+    </div>
+</div>
+
+<!-- 說明 Modal (新增) -->
+<div id="info-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div id="modal-text" class="modal-text"></div>
     </div>
 </div>
 
@@ -671,6 +727,33 @@
                 plugins: { legend: { display: false } }
             }
         });
+    }
+
+    // === Modal Logic (新增) ===
+    const modal = document.getElementById("info-modal");
+    const modalText = document.getElementById("modal-text");
+    const closeBtn = document.getElementsByClassName("close-modal")[0];
+
+    // 為所有亮能圖示添加點擊事件
+    document.querySelectorAll('.spectrum-icon-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            // 從 data-desc 屬性獲取完整說明
+            const desc = item.getAttribute('data-desc');
+            modalText.innerText = desc;
+            modal.style.display = "flex"; // 使用 flex 置中
+        });
+    });
+
+    // 關閉按鈕
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // 點擊 Modal 外部關閉
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 </script>
 
