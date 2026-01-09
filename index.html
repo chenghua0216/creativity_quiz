@@ -328,8 +328,8 @@
         <header>
             <h1>CREATE 創造力亮能光譜</h1>
             <div class="subtitle">
-                一起展開內在創造力的探索旅程，<br>
-                分析你獨一無二的創造力性格。<br>
+                一起展開內在創造力的探索旅程。<br>
+                透過情境觀察，分析你獨一無二的創造力性格。<br>
                 <span style="font-size: 0.8em; color: #999;">(結合 108 課綱核心素養分析)</span>
             </div>
         </header>
@@ -546,6 +546,24 @@
                 { text: "一個眼神交流搭配手勢，能瞬間確認彼此的默契與連結。", scores: { A: 3, C: 1 } },
                 { text: "一個搞怪的鬼臉或聲音，目的是為了打破尷尬，讓氣氛輕鬆。", scores: { R: 3, T: 1 } }
             ]
+        },
+        // 13. 藝術欣賞與轉化 (Art Appreciation & Transformation) - 新增題目
+        {
+            text: "請欣賞馬諦斯的剪紙名作《蝸牛》。看著這幅畫，你當下最強烈的感受是？<br><br><img src='https://uploads4.wikiart.org/images/henri-matisse/the-snail-1953.jpg' alt='馬諦斯-蝸牛' style='width: 100%; max-width: 280px; border-radius: 10px; margin-top: 15px;'>",
+            options: [
+                { text: "真神奇！明明只是色塊的拼貼，閉上眼，彷彿能感覺到蝸牛緩慢的移動與生命力。", scores: { C: 3, A: 1 } },
+                { text: "哇，我沒想到這是蝸牛耶！我也想拿剪刀隨意剪貼，試試看只用幾個色塊能拼出什麼有趣的東西。", scores: { T: 3, D: 1 } },
+                { text: "馬諦斯捨棄了細節，將蝸牛的概念抽象化成為純粹的顏色與結構。", scores: { R: 3, E: 1 } }
+            ]
+        },
+        // 14. 想像力與假設 (Imagination) - 新增題目 2983
+        {
+            text: "如果要寫一本標題為《2983》的小說，你的直覺告訴你，這會是一個什麼樣的故事？<br><br><img src='https://raw.githubusercontent.com/chenghua0216/creativity_quiz/16a01d6ea0a6ac5d020467376ad8ececa0ac0684/2983.png' alt='2983' style='width: 100%; max-width: 280px; border-radius: 10px; margin-top: 15px;'>",
+            options: [
+                { text: "設定在西元2983年的未來寓言。探討在高度科技或末日後的世界，人類是否還保有身而為人的本質和情感。", scores: { T: 3, C: 1 } },
+                { text: "這是一個計數。可能是「想念你的第2983天」或「第2983封沒寄出的信」。這是關於記憶與情感的細膩故事。", scores: { R: 3, A: 1 } },
+                { text: "這是一個關鍵密碼、倒數秒數，代號2983的機密行動。故事節奏緊湊，主角必須在極限壓力下完成任務。", scores: { D: 3, E: 1 } }
+            ]
         }
     ];
 
@@ -617,7 +635,7 @@
         
         // 更新 UI
         document.getElementById('progress').style.width = `${((currentQ) / questions.length) * 100}%`;
-        document.getElementById('q-text').innerText = `Q${currentQ+1}. ${q.text}`;
+        document.getElementById('q-text').innerHTML = `Q${currentQ+1}. ${q.text}`;
         
         const area = document.getElementById('options-area');
         area.innerHTML = '';
