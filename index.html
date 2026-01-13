@@ -7,23 +7,30 @@
     <!-- 引入 Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* 繪本童趣風格配色定義 */
         :root {
-            --primary: #2c3e50;       /* 深藍：穩重 */
-            --accent: #e67e22;        /* 橘色：創造力與活力 */
-            --bg-color: #fdfbf7;      /* 米白：紙張質感 */
-            --card-bg: #ffffff;
-            --text-main: #333;
+            --primary: #5D4037;       /* 深咖啡色：像繪本的文字 */
+            --accent-1: #FF8E72;      /* 珊瑚紅(橘色系)：溫暖活力 */
+            --accent-2: #6EC6CA;      /* 天空藍：清新創意 */
+            --accent-3: #FFD56B;      /* 奶油黃：快樂 */
+            --bg-color: #FFF9E6;      /* 暖奶油色：像圖畫紙 */
+            --card-bg: #FFFFFF;
+            --text-main: #5D4037;
+            --text-light: #8D6E63;
         }
 
         body {
-            font-family: "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
-            background-color: var(--bg-color);
+            /* 嘗試使用圓體或手寫感字體 */
+            font-family: "Comic Sans MS", "Chalkboard SE", "Yu Pearl", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            /* 背景改為像桌面的顏色，讓中間的筆記本凸顯出來 */
+            background-color: #E6DBC8; 
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjRTZEQkM4Ii8+CjxwYXRoIGQ9Ik0xIDNoMnYxSDF6IiBmaWxsPSIjRDhDMEE4IiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4='); /* 細微雜點紋理 */
             color: var(--text-main);
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center; /* 垂直置中 */
+            align-items: center; 
             min-height: 100vh;
             box-sizing: border-box;
         }
@@ -31,293 +38,427 @@
         .container {
             width: 100%;
             max-width: 700px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            padding: 40px;
+            background: #FFF; /* 紙張背景白 */
+            
+            /* 筆記本線條與紅線設計 */
+            background-image: 
+                /* 左側紅色基準線 */
+                linear-gradient(90deg, transparent 59px, #FFCCBC 59px, #FFCCBC 61px, transparent 61px),
+                /* 水平橫線 (像作業簿) */
+                linear-gradient(#F0F4C3 1px, transparent 1px);
+            background-size: 100% 100%, 100% 30px; /* 紅線滿高，橫線每30px重複 */
+            background-attachment: local;
+
+            /* 筆記本形狀 */
+            border-radius: 5px 15px 15px 5px; 
+            box-shadow: 
+                10px 10px 20px rgba(0,0,0,0.15), /* 桌面陰影 */
+                inset 20px 0 30px rgba(0,0,0,0.02); /* 紙張彎曲感 */
+            
+            /* 內距調整：左邊留多一點給裝訂邊 */
+            padding: 50px 40px 50px 80px;
             position: relative;
             transition: all 0.3s ease;
+            
+            /* 移除原本的實線邊框，改用陰影表現紙張厚度 */
+            border: none;
         }
 
-        /* 標題區 */
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { color: var(--primary); margin: 0 0 10px 0; font-size: 1.8rem; }
-        .subtitle { color: #7f8c8d; font-size: 0.95rem; line-height: 1.6; }
+        /* 螺旋線圈裝訂效果 (Spiral Binding) */
+        .container::before {
+            content: '';
+            position: absolute;
+            left: 15px; /* 位於紅線左側 */
+            top: 20px;
+            bottom: 20px;
+            width: 15px;
+            /* 模擬線圈孔洞與鐵絲 */
+            background: radial-gradient(circle at center, #555 30%, transparent 35%);
+            background-size: 100% 30px; /* 對齊橫線間距 */
+            background-repeat: repeat-y;
+            /* 稍微加點陰影讓洞看起來有深度 */
+            filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.8));
+        }
 
-        /* 六大亮能圖示列 (新樣式) */
+        /* 標題區：故事書標題 */
+        header { text-align: center; margin-bottom: 30px; position: relative; }
+        
+        /* 標題背景塗鴉 */
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 200px;
+            height: 15px;
+            background: rgba(255, 142, 114, 0.2); /* 螢光筆效果 */
+            border-radius: 10px;
+            z-index: 0;
+        }
+
+        h1 { 
+            color: var(--primary); 
+            margin: 0 0 10px 0; 
+            font-size: 2rem; 
+            font-weight: 900; 
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+        .subtitle { 
+            color: var(--text-light); 
+            font-size: 1rem; 
+            line-height: 1.6; 
+            font-weight: 600;
+        }
+
+        /* 六大亮能圖示列 - 修改為 Grid 佈局 */
         .spectrum-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            justify-content: center; 
+            gap: 20px 30px; 
             margin: 30px 0;
-            flex-wrap: wrap;
         }
+
         .spectrum-icon-item {
-            width: 70px;
-            height: 70px;
-            border-radius: 12px; /* 改為圓角矩形，不再是圓形 */
+            width: 80px;  
+            height: 80px;
+            border-radius: 50%; 
             background: #ffffff;
+            border: 3px solid #E0E0E0; /* 預設淺灰框，不要全白以免在白紙上看不見 */
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            padding: 12px; 
+            cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            padding: 5px; /* 增加一點內距，讓圖片完整呈現不貼邊 */
-            cursor: pointer; /* 改為手指游標，提示可點擊 */
+            overflow: hidden; 
         }
-        .spectrum-icon-item:hover {
-            transform: scale(1.1);
-            background: #fff;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+
+        /* 互動樣式：背景維持白色，邊框變橘色 */
+        .spectrum-icon-item:hover, .spectrum-icon-item:active {
+            transform: scale(1.15) rotate(5deg);
+            background: #ffffff; 
+            box-shadow: 0 8px 15px rgba(255, 142, 114, 0.2);
+            border-color: var(--accent-1); 
         }
+
         .spectrum-icon-item img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 確保圖片完整顯示，不會被裁切 */
+            object-fit: contain;
         }
 
-        /* Modal 樣式 (新增) */
+        /* Modal 樣式 */
         .modal {
-            display: none; /* 預設隱藏 */
+            display: none;
             position: fixed; 
             z-index: 2000; 
             left: 0;
             top: 0;
             width: 100%; 
             height: 100%; 
-            background-color: rgba(0,0,0,0.6); 
-            animation: fadeIn 0.3s;
+            background-color: rgba(93, 64, 55, 0.6); /* 深色遮罩讓筆記本更清楚 */
+            animation: fadeIn 0.4s;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(2px);
         }
+        /* Modal 改成便條紙風格 */
         .modal-content {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
+            background-color: #FFF9C4; /* 黃色便條紙 */
+            padding: 40px;
+            border-radius: 2px; 
             width: 85%; 
-            max-width: 500px;
+            max-width: 450px;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            text-align: left;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+            border: none;
+            transform: rotate(-1deg); /* 微微歪斜 */
         }
+        /* 便條紙上方的膠帶 */
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
         .close-modal {
             position: absolute;
             top: 10px;
             right: 15px;
-            color: #aaa;
+            color: var(--primary);
             font-size: 28px;
-            font-weight: bold;
+            font-weight: 900;
             cursor: pointer;
             line-height: 1;
-            padding: 5px;
         }
-        .close-modal:hover {
-            color: #333;
-        }
+        .close-modal:hover { opacity: 0.7; }
         
-        /* Modal 內部文字排版優化 */
         .modal-title-text {
             color: var(--primary);
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             font-weight: 800;
-            margin-bottom: 15px;
-            border-bottom: 3px solid var(--accent);
-            padding-bottom: 8px;
+            margin-bottom: 20px;
             display: inline-block;
+            border-bottom: 2px dashed var(--primary);
+            padding-bottom: 5px;
         }
         .modal-body-text {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             line-height: 1.8;
-            color: #555;
+            color: var(--text-main);
             text-align: justify;
         }
 
-        /* 按鈕通用樣式 */
+        /* 按鈕通用樣式：像貼紙或印章 */
         .btn {
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--accent-1); 
+            color: white; 
             border: none;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            border-radius: 50px;
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            border-radius: 50px; 
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition: all 0.3s ease;
             display: block;
-            margin: 20px auto 0;
+            margin: 30px auto 0;
             width: fit-content;
-            font-weight: bold;
+            font-weight: 800;
+            letter-spacing: 1px;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.15); /* 簡單陰影 */
         }
-        /* 避免手機上按鈕也有 sticky hover */
+        
         @media (hover: hover) {
             .btn:hover {
-                background-color: var(--accent);
                 transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+                box-shadow: 5px 5px 0 rgba(0,0,0,0.15);
+                background-color: #FF7D5D;
             }
         }
         .btn:active {
-            background-color: var(--accent);
-            transform: translateY(0);
+            transform: translateY(1px);
+            box-shadow: 1px 1px 0 rgba(0,0,0,0.15);
         }
 
         /* 測驗區塊 */
-        .quiz-section { display: none; animation: fadeIn 0.5s; }
+        .quiz-section { display: none; animation: popIn 0.5s; }
         
+        /* 進度條：改為單一顏色 */
         .progress-bar {
             width: 100%;
-            height: 8px;
-            background: #eee;
+            height: 12px;
+            background: rgba(0,0,0,0.05);
             margin-bottom: 30px;
-            border-radius: 4px;
+            border-radius: 6px;
             overflow: hidden;
+            border: none;
         }
         .progress-fill {
             height: 100%;
-            background: var(--accent);
+            background: var(--accent-2); /* 藍色蠟筆色 - 純色 */
             width: 0%;
-            transition: width 0.4s ease;
+            transition: width 0.5s ease;
+            border-radius: 6px;
         }
 
-        /* 題目容器：加入透明度轉場，解決切換時的閃爍與殘留選取問題 */
         #question-container {
             transition: opacity 0.3s ease;
             opacity: 1;
         }
 
         .question-text {
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-size: 1.4rem;
+            font-weight: 800; 
             margin-bottom: 30px;
             line-height: 1.5;
-            color: var(--primary);
+            color: var(--text-main);
+            /* 讓題目像是在紙上圈出來的重點 */
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--accent-3); /* 黃框 */
         }
 
-        .options-grid { display: grid; gap: 15px; }
+        .options-grid { display: grid; gap: 18px; }
         
         .option-card {
             background: #fff;
-            border: 2px solid #ecf0f1;
-            padding: 20px 25px;
-            border-radius: 12px;
+            border: 2px solid #DDD; /* 像卡片 */
+            padding: 15px 20px;
+            border-radius: 10px; 
             cursor: pointer;
             text-align: left;
-            font-size: 1rem;
-            color: #555;
+            font-size: 1.05rem;
+            color: var(--text-main);
             transition: all 0.2s;
             line-height: 1.5;
-            -webkit-tap-highlight-color: transparent; /* 移除手機預設點擊灰底 */
+            -webkit-tap-highlight-color: transparent;
+            font-weight: 600;
+            box-shadow: 2px 2px 0 #EEE;
         }
 
-        /* === 修正：僅在支援滑鼠 Hover 的裝置顯示懸停效果 === */
+        /* Hover 效果：變色邊框 */
         @media (hover: hover) {
             .option-card:hover {
-                border-color: var(--accent);
-                background: #fff8f0;
-                transform: translateX(5px);
-                color: var(--accent);
+                border-color: var(--accent-3); /* 黃色 */
+                background: #FFFDE7;
+                transform: translateX(3px);
+                color: var(--primary);
             }
         }
 
-        /* === 手機觸控的 Active 效果 === */
         .option-card:active {
-            border-color: var(--accent);
-            background: #fff8f0;
-            transform: scale(0.98); 
-            color: var(--accent);
+            transform: scale(0.99); 
+            background: #FFFDE7;
+            border-color: var(--accent-3);
         }
 
-        /* === 新增：選中狀態 (用於延遲期間保持高亮) === */
         .option-card.selected {
-            border-color: var(--accent);
-            background: #fff8f0;
-            transform: scale(0.98);
-            color: var(--accent);
+            border-color: var(--accent-1); 
+            background: #FFEBEE; /* 粉紅底 */
+            color: var(--primary);
+            box-shadow: none;
         }
 
         /* 結果區塊 */
-        .result-section { display: none; animation: fadeIn 0.8s; }
+        .result-section { display: none; animation: popIn 0.8s; }
         
         .archetype-header { text-align: center; margin-bottom: 20px; }
-        .archetype-label { font-size: 0.9rem; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
-        .archetype-title { 
-            font-size: 2.2rem; 
-            color: var(--accent); 
-            margin: 0 0 15px 0; 
+        .archetype-label { 
+            font-size: 0.95rem; 
+            color: #FFF; 
+            background: var(--accent-2); /* 藍底標籤 */
+            padding: 5px 15px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px; 
             font-weight: 800; 
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+        .archetype-title { 
+            font-size: 2.4rem; 
+            color: var(--accent-1); 
+            margin: 10px 0; 
+            font-weight: 900; 
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-wrap: wrap; /* 避免在小螢幕換行時跑版 */
-            gap: 12px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-        .archetype-slogan { font-style: italic; color: #666; font-size: 1rem; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 10px 0; display: inline-block;}
+        .archetype-slogan { 
+            font-style: italic;
+            color: var(--text-light); 
+            font-size: 1.1rem; 
+            padding: 5px 0;
+            display: inline-block;
+            border-bottom: 2px solid #EEE;
+        }
 
         .chart-container {
             position: relative;
             height: 320px;
             width: 100%;
             margin: 20px 0;
+            /* 讓圖表區像貼在筆記本上的照片 */
+            background: #FFF;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.05);
+            transform: rotate(-1deg);
         }
 
         .analysis-box {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 25px;
-            border-left: 5px solid var(--accent);
+            background: transparent;
+            /* 移除原本的框，改用文字排版 */
+            padding: 20px 0;
+            margin-top: 10px;
+            position: relative;
         }
 
-        .analysis-title { font-weight: bold; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; font-size: 1.1rem; }
-        .analysis-text { font-size: 0.95rem; line-height: 1.7; color: #444; text-align: justify; }
+        .analysis-title { 
+            font-weight: 900; 
+            color: var(--primary); 
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            font-size: 1.2rem; 
+            /* 標題底線 */
+            text-decoration: underline;
+            text-decoration-color: var(--accent-3);
+            text-decoration-thickness: 3px;
+        }
+        .analysis-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-main); text-align: justify; }
         
         .tag-108 {
             display: inline-block;
-            background: #e3f2fd;
-            color: #1565c0;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            margin-top: 15px;
-            font-weight: bold;
+            background: #FFF;
+            border: 2px solid var(--accent-2);
+            color: var(--accent-2); 
+            padding: 8px 15px;
+            border-radius: 20px; 
+            font-size: 0.9rem;
+            margin-top: 20px;
+            font-weight: 700;
             line-height: 1.4;
         }
 
         .celebs-box {
-            margin-top: 25px;
+            margin-top: 30px;
             text-align: center;
         }
         .celeb-list {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 12px;
+            margin-top: 15px;
         }
         .celeb-tag {
-            background: white;
-            border: 1px solid #ddd;
+            background: #F5F5F5;
+            border: 1px solid #CCC;
             padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: #555;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* RWD */
         @media (max-width: 600px) {
-            .container { padding: 25px 20px; }
-            .archetype-title { font-size: 1.6rem; }
-            h1 { font-size: 1.5rem; }
-            .option-card { padding: 15px; }
-            .spectrum-icons { gap: 10px; }
-            .spectrum-icon-item { width: 50px; height: 50px; }
-            .modal-content { width: 80%; padding: 20px; } /* 手機版 Modal 調整 */
+            .container { 
+                padding: 40px 20px 40px 50px; /* 手機版左側內距減少一點 */
+                width: 100%; 
+                border-radius: 0; /* 手機滿版 */
+            } 
+            body { padding: 0; }
+            .archetype-title { font-size: 1.8rem; }
+            h1 { font-size: 1.6rem; }
+            .spectrum-icons { gap: 15px; }
+            .spectrum-icon-item { width: 65px; height: 65px; }
+            .btn { width: 100%; box-sizing: border-box; } 
         }
     </style>
 </head>
@@ -326,15 +467,15 @@
 <div class="container">
     <div id="start-screen">
         <header>
-            <h1>CREATE 創造力亮能光譜</h1>
+            <h1>CREATE <br>創造力亮能光譜</h1>
             <div class="subtitle">
-                一起展開創造力的探索旅程，<br>
-                分析你獨一無二的創造力性格。<br>
-                <span style="font-size: 0.8em; color: #999;">(結合 108 課綱核心素養分析)</span>
+                歡迎來到創造力小教室！<br>
+                在筆記本上寫下你的選擇，<br>
+                看看你是哪一種獨特的創意角色？
             </div>
         </header>
 
-        <!-- 六個圖案橫放區域，取代原本的燈泡 -->
+        <!-- 六個圖案 Grid 排列 -->
         <div class="spectrum-icons">
             <!-- C: Consciousness -->
             <div class="spectrum-icon-item" data-desc="覺察 Consciousness：「覺察」是創造力的起點。它超越了單純的看見，而是指能自我感官調節，細膩地接收內在的情緒波動以及外在環境的細微變化。這是一種勇於面對未知體驗的心理準備狀態。" title="覺察 (Consciousness)">
@@ -364,9 +505,9 @@
 
         <button class="btn" onclick="startQuiz()">開始探索</button>
 
-        <!-- 新增 Logo 區域 -->
-        <div style="text-align: center; margin-top: 40px; opacity: 0.9;">
-            <img src="https://github.com/chenghua0216/figures/blob/main/logo.png?raw=true" alt="立賢教育基金會 Logo" style="width: 150px; height: auto;">
+        <!-- Logo 區域 -->
+        <div style="text-align: center; margin-top: 50px;">
+            <img src="https://github.com/chenghua0216/figures/blob/main/logo.png?raw=true" alt="立賢教育基金會 Logo" style="width: 140px; height: auto;">
         </div>
     </div>
 
@@ -380,7 +521,7 @@
 
     <div id="result-screen" class="result-section">
         <div class="archetype-header">
-            <div class="archetype-label">你的創造力性格原型</div>
+            <div class="archetype-label">★ 你的創造力角色 ★</div>
             <h2 class="archetype-title" id="r-title">分析中...</h2>
             <div class="archetype-slogan" id="r-slogan"></div>
         </div>
@@ -391,33 +532,26 @@
 
         <div class="analysis-box">
             <div class="analysis-title">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                性格解析與素養連結
+                <span style="font-size: 1.5rem; margin-right: 10px;">📝</span>
+                角色解析與魔法素養
             </div>
             <div class="analysis-text" id="r-desc"></div>
             <div id="r-108"></div>
         </div>
 
         <div class="celebs-box">
-            <div style="font-weight: bold; color: var(--primary); margin-bottom: 10px; font-size: 0.9rem;">相同光譜名人參考</div>
+            <div style="font-weight: 800; color: var(--text-light); margin-bottom: 15px; font-size: 1rem;">✨ 和你一樣的創意大師 ✨</div>
             <div class="celeb-list" id="r-celebs"></div>
         </div>
 
-        <button class="btn" onclick="location.reload()">重新測驗</button>
+        <button class="btn" onclick="location.reload()">再玩一次 ↺</button>
     </div>
 </div>
 
-<!-- 說明 Modal (新增) -->
+<!-- 說明 Modal -->
 <div id="info-modal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
-        <!-- 修改為空的容器，由 JS 填充 -->
         <div id="modal-text"></div>
     </div>
 </div>
@@ -549,7 +683,7 @@
         },
         // 13. 藝術欣賞與轉化 (Art Appreciation & Transformation) - 新增題目
         {
-            text: "請欣賞馬諦斯的剪紙名作《蝸牛》。看著這幅畫，你當下最強烈的感受是？<br><br><img src='https://uploads4.wikiart.org/images/henri-matisse/the-snail-1953.jpg' alt='馬諦斯-蝸牛' style='width: 100%; max-width: 280px; border-radius: 10px; margin-top: 15px;'>",
+            text: "請欣賞馬諦斯的剪紙名作《蝸牛》。看著這幅畫，你當下最強烈的感受是？<br><br><img src='https://uploads4.wikiart.org/images/henri-matisse/the-snail-1953.jpg' alt='馬諦斯-蝸牛' style='width: 100%; max-width: 280px; border-radius: 15px; border:2px dashed #E0C09E; margin-top: 15px;'>",
             options: [
                 { text: "真神奇！明明只是色塊的拼貼，閉上眼，彷彿能感覺到蝸牛緩慢的移動與生命力。", scores: { C: 3, A: 1 } },
                 { text: "哇，我沒想到這是蝸牛耶！我也想拿剪刀隨意剪貼，試試看只用幾個色塊能拼出什麼有趣的東西。", scores: { T: 3, D: 1 } },
@@ -558,7 +692,7 @@
         },
         // 14. 想像力與假設 (Imagination) - 新增題目 2983
         {
-            text: "如果要寫一本標題為《2983》的小說，你的直覺告訴你，這會是一個什麼樣的故事？<br><br><img src='https://raw.githubusercontent.com/chenghua0216/creativity_quiz/16a01d6ea0a6ac5d020467376ad8ececa0ac0684/2983.png' alt='2983' style='width: 100%; max-width: 280px; border-radius: 10px; margin-top: 15px;'>",
+            text: "如果要寫一本標題為《2983》的小說，你的直覺告訴你，這會是一個什麼樣的故事？<br><br><img src='https://raw.githubusercontent.com/chenghua0216/creativity_quiz/16a01d6ea0a6ac5d020467376ad8ececa0ac0684/2983.png' alt='2983' style='width: 100%; max-width: 280px; border-radius: 15px; border:2px dashed #E0C09E; margin-top: 15px;'>",
             options: [
                 { text: "設定在西元2983年的未來寓言。探討在高度科技或末日後的世界，人類是否還保有身而為人的本質和情感。", scores: { T: 3, C: 1 } },
                 { text: "這是一個計數。可能是「想念你的第2983天」或「第2983封沒寄出的信」。這是關於記憶與情感的細膩故事。", scores: { R: 3, A: 1 } },
@@ -709,7 +843,7 @@
         const data = archetypes[maxKey];
         // 加入圖片到標題中
         document.getElementById('r-title').innerHTML = `
-            <img src="${data.img}" alt="${data.title}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: contain;">
+            <img src="${data.img}" alt="${data.title}" style="width: 50px; height: 50px; border-radius: 50%; border:3px solid #6EC6CA; object-fit: contain;">
             ${data.title}
         `;
         document.getElementById('r-slogan').innerText = data.slogan;
@@ -717,10 +851,10 @@
         document.getElementById('r-108').innerHTML = `<span class="tag-108">${data.code108}</span>`;
 
         // 3. 填入名人
-        const celebHTML = data.celebs.map(c => `<div class="celeb-tag">★ ${c}</div>`).join('');
+        const celebHTML = data.celebs.map(c => `<div class="celeb-tag">${c}</div>`).join('');
         document.getElementById('r-celebs').innerHTML = celebHTML;
 
-        // 4. 繪製雷達圖
+        // 4. 繪製雷達圖 (配色調整：柔和粉嫩色系)
         const ctx = document.getElementById('radarChart').getContext('2d');
         new Chart(ctx, {
             type: 'radar',
@@ -729,13 +863,14 @@
                 datasets: [{
                     label: '你的亮能光譜',
                     data: [scores.C, scores.R, scores.D, scores.A, scores.T, scores.E],
-                    backgroundColor: 'rgba(230, 126, 34, 0.2)',
-                    borderColor: 'rgba(230, 126, 34, 1)',
-                    pointBackgroundColor: '#2c3e50',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#2c3e50',
-                    borderWidth: 2
+                    backgroundColor: 'rgba(255, 142, 114, 0.3)', /* 珊瑚紅透明 */
+                    borderColor: '#FF8E72', /* 珊瑚紅 */
+                    pointBackgroundColor: '#FFD56B', /* 黃色點點 */
+                    pointBorderColor: '#FFF',
+                    pointHoverBackgroundColor: '#FFF',
+                    pointHoverBorderColor: '#FF8E72',
+                    borderWidth: 3,
+                    pointRadius: 5
                 }]
             },
             options: {
@@ -743,13 +878,13 @@
                 maintainAspectRatio: false,
                 scales: {
                     r: {
-                        angleLines: { color: '#eee' },
-                        grid: { color: '#eee' },
+                        angleLines: { color: '#E0E0E0' }, 
+                        grid: { color: '#F0E6D2' },
                         pointLabels: { 
-                            font: { size: 14, family: 'sans-serif', weight: 'bold' }, 
-                            color: '#555' 
+                            font: { size: 14, family: 'Comic Sans MS', weight: 'bold' }, 
+                            color: '#5D4037' 
                         },
-                        ticks: { display: false }, // 隱藏數值標籤，讓圖面更乾淨
+                        ticks: { display: false }, 
                         suggestedMin: 0,
                         suggestedMax: 12
                     }
