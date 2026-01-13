@@ -251,6 +251,38 @@
             box-shadow: 1px 1px 0 rgba(0,0,0,0.15);
         }
 
+        /* 名字輸入區塊 (新增) */
+        .name-section {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s;
+            padding: 40px 0;
+        }
+
+        #user-name-input {
+            font-size: 1.8rem;
+            padding: 10px 20px;
+            border: none;
+            /* 手寫底線風格 */
+            border-bottom: 3px dashed var(--accent-1);
+            background: transparent;
+            color: var(--primary);
+            text-align: center;
+            font-family: inherit;
+            outline: none;
+            width: 80%;
+            max-width: 300px;
+            font-weight: bold;
+            transition: border-color 0.3s;
+        }
+        #user-name-input:focus {
+            border-bottom-color: var(--accent-2);
+        }
+        #user-name-input::placeholder {
+            color: #C0A080;
+            font-weight: normal;
+        }
+
         /* 測驗區塊 */
         .quiz-section { display: none; animation: popIn 0.5s; }
         
@@ -395,11 +427,21 @@
             display: flex; 
             align-items: center; 
             font-size: 1.2rem; 
+            flex-wrap: wrap; /* 讓名字太長時可以換行 */
             /* 標題底線 */
             text-decoration: underline;
             text-decoration-color: var(--accent-3);
             text-decoration-thickness: 3px;
         }
+
+        /* 新增：使用者名字高亮樣式 */
+        .user-name-highlight {
+            font-size: 1.8rem; /* 字級較大 */
+            color: var(--accent-1);
+            margin-right: 5px;
+            display: inline-block;
+        }
+
         .analysis-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-main); text-align: justify; }
         
         .tag-108 {
@@ -469,8 +511,9 @@
         <header>
             <h1>CREATE <br>創造力亮能光譜</h1>
             <div class="subtitle">
-                歡迎來到創造力小教室，<br>
-                認識你獨一無二的創造力性格！
+                歡迎來到創造力小教室！<br>
+                在筆記本上寫下你的選擇，<br>
+                看看你是哪一種獨特的創意角色？
             </div>
         </header>
 
@@ -502,12 +545,19 @@
             </div>
         </div>
 
-        <button class="btn" onclick="startQuiz()">開始探索</button>
+        <button class="btn" onclick="goToNameScreen()">開始探索</button>
 
         <!-- Logo 區域 -->
         <div style="text-align: center; margin-top: 50px;">
             <img src="https://github.com/chenghua0216/figures/blob/main/logo.png?raw=true" alt="立賢教育基金會 Logo" style="width: 140px; height: auto;">
         </div>
+    </div>
+
+    <!-- 輸入名字區塊 (新增) -->
+    <div id="name-screen" class="name-section">
+        <h2 style="color: var(--primary); margin-bottom: 30px; font-weight: 800;">✎ 請問你的名字是？</h2>
+        <input type="text" id="user-name-input" placeholder="請寫下你的暱稱..." maxlength="10">
+        <button class="btn" onclick="startQuiz()">前往測驗</button>
     </div>
 
     <div id="quiz-screen" class="quiz-section">
@@ -530,7 +580,8 @@
         </div>
 
         <div class="analysis-box">
-            <div class="analysis-title">
+            <!-- 修改這裡：加入 ID 以便 JS 操作 -->
+            <div class="analysis-title" id="analysis-title-text">
                 <span style="font-size: 1.5rem; margin-right: 10px;">📝</span>
                 角色解析與魔法素養
             </div>
@@ -559,8 +610,6 @@
     // === 資料庫設定 ===
     
     // 定義六大亮能
-    // C: Consciousness (覺察), R: Realization (表達), D: Drive (驅動/Engagement)
-    // A: Alignment (合作), T: Trial (探索), E: Execution (實踐)
     const traits = {
         C: "覺察力 (Consciousness)",
         R: "表達力 (Realization)",
@@ -570,9 +619,10 @@
         E: "實踐力 (Execution)"
     };
 
-    // 題目設計：根據 36 個創意提示列表改編，總計 12 題
+    // 題目設計
     const questions = [
-        // 1. 自我探索 (Self-Discovery)
+        // ... (題目維持不變) ...
+        // 1. 自我探索
         {
             text: "當我感到「創造力消失」的時候，我通常會？",
             options: [
@@ -581,7 +631,7 @@
                 { text: "找朋友聊聊天，或許他們的幾句話就能重新點燃我。", scores: { A: 3, R: 1 } }
             ]
         },
-        // 2. 自我探索 (Self-Discovery)
+        // 2. 自我探索
         {
             text: "如果必須用一種樂器來代表你的個性，你會選擇？",
             options: [
@@ -590,7 +640,7 @@
                 { text: "電子合成器。充滿實驗性，能創造出前所未有的聲音。", scores: { T: 3, R: 1 } }
             ]
         },
-        // 3. 觀察與欣賞 (Observation)
+        // 3. 觀察與欣賞
         {
             text: "在路邊看到一個被丟棄、生鏽的鐵罐，你的第一個反應是？",
             options: [
@@ -599,7 +649,7 @@
                 { text: "想撿起來帶回去，也許能在下次創作或改造中派上用場。", scores: { E: 3, T: 1 } }
             ]
         },
-        // 4. 觀察與欣賞 (Observation)
+        // 4. 觀察與欣賞
         {
             text: "找出一件原本被視為「廢棄物」的紙箱，你會如何賦予它新生命？",
             options: [
@@ -608,7 +658,7 @@
                 { text: "邀請孩子或朋友一起來，用它搭建一個秘密基地。", scores: { A: 3, D: 1 } }
             ]
         },
-        // 5. 發明與解決問題 (Invention)
+        // 5. 發明與解決問題
         {
             text: "如果受邀設計一台「讓生氣的人瞬間笑出來」的機器，你的設計核心是？",
             options: [
@@ -617,7 +667,7 @@
                 { text: "搔癢機械手臂。直接針對生理反應，用最實際的物理方式讓他笑。", scores: { E: 3, D: 1 } }
             ]
         },
-        // 6. 發明與解決問題 (Invention)
+        // 6. 發明與解決問題
         {
             text: "想像一種混合了兩種現有動物的新生物，你會最在意牠的什麼？",
             options: [
@@ -626,7 +676,7 @@
                 { text: "牠的生存能力，例如是否有強大的翅膀或適應極端氣候的能力。", scores: { T: 3, D: 1 } }
             ]
         },
-        // 7. 想像力與假設 (Imagination)
+        // 7. 想像力與假設
         {
             text: "如果真的能跟植物溝通，你會對路邊的小草說什麼？",
             options: [
@@ -635,7 +685,7 @@
                 { text: "我不會說話，我會對著它唱歌，分享我的快樂。", scores: { R: 3, D: 1 } }
             ]
         },
-        // 8. 想像力與假設 (Imagination)
+        // 8. 想像力與假設
         {
             text: "想像世界上的地心引力突然減半，你覺得生活最大的改變是？",
             options: [
@@ -644,7 +694,7 @@
                 { text: "大家能更輕鬆地搬運重物，互相幫助的門檻變低了。", scores: { A: 3, E: 1 } }
             ]
         },
-        // 9. 創造力哲學 (Philosophy of Creativity)
+        // 9. 創造力哲學
         {
             text: "關於「說謊」和「講故事」，你認為這兩者的差別在於？",
             options: [
@@ -653,7 +703,7 @@
                 { text: "結果的真實性。故事是為了創造一個新的真實，謊言是為了掩蓋舊的真實。", scores: { T: 3, C: 1 } }
             ]
         },
-        // 10. 創造力哲學 (Philosophy of Creativity)
+        // 10. 創造力哲學
         {
             text: "如果 AI 機器人畫了一幅很美的畫，你認為它具有創造力嗎？",
             options: [
@@ -662,7 +712,7 @@
                 { text: "不重要。重要的是這幅畫能否連結人心，引發大家的討論。", scores: { A: 3, R: 1 } }
             ]
         },
-        // 11. 行動與遊戲 (Action & Play)
+        // 11. 行動與遊戲
         {
             text: "現在試著用你的「非慣用手」寫下名字或畫個圓，你的感受是？",
             options: [
@@ -671,7 +721,7 @@
                 { text: "我會多練習幾次，直到我能控制肌肉，把它寫得工整為止。", scores: { E: 3, D: 1 } }
             ]
         },
-        // 12. 行動與遊戲 (Action & Play)
+        // 12. 行動與遊戲
         {
             text: "如果要發明一種新的「打招呼方式」並教給朋友，你會設計？",
             options: [
@@ -680,7 +730,7 @@
                 { text: "一個搞怪的鬼臉或聲音，目的是為了打破尷尬，讓氣氛輕鬆。", scores: { R: 3, T: 1 } }
             ]
         },
-        // 13. 藝術欣賞與轉化 (Art Appreciation & Transformation) - 新增題目
+        // 13. 藝術欣賞
         {
             text: "請欣賞馬諦斯的剪紙名作《蝸牛》。看著這幅畫，你當下最強烈的感受是？<br><br><img src='https://uploads4.wikiart.org/images/henri-matisse/the-snail-1953.jpg' alt='馬諦斯-蝸牛' style='width: 100%; max-width: 280px; border-radius: 15px; border:2px dashed #E0C09E; margin-top: 15px;'>",
             options: [
@@ -689,7 +739,7 @@
                 { text: "馬諦斯捨棄了細節，將蝸牛的概念抽象化成為純粹的顏色與結構。", scores: { R: 3, E: 1 } }
             ]
         },
-        // 14. 想像力與假設 (Imagination) - 新增題目 2983
+        // 14. 想像力
         {
             text: "如果要寫一本標題為《2983》的小說，你的直覺告訴你，這會是一個什麼樣的故事？<br><br><img src='https://raw.githubusercontent.com/chenghua0216/creativity_quiz/16a01d6ea0a6ac5d020467376ad8ececa0ac0684/2983.png' alt='2983' style='width: 100%; max-width: 280px; border-radius: 15px; border:2px dashed #E0C09E; margin-top: 15px;'>",
             options: [
@@ -700,7 +750,7 @@
         }
     ];
 
-    // 結果分析資料庫 (對應最高分的亮能)
+    // 結果分析資料庫
     const archetypes = {
         C: {
             title: "澄澈的哲思者",
@@ -756,9 +806,26 @@
     let currentQ = 0;
     let scores = { C: 0, R: 0, D: 0, A: 0, T: 0, E: 0 };
     let isTransitioning = false; // 防止重複點擊的旗標
+    let userName = ""; // 新增：儲存使用者名字
 
-    function startQuiz() {
+    // 步驟 1: 前往名字輸入頁
+    function goToNameScreen() {
         document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('name-screen').style.display = 'block';
+        // 自動聚焦輸入框
+        setTimeout(() => document.getElementById('user-name-input').focus(), 100);
+    }
+
+    // 步驟 2: 開始測驗 (儲存名字)
+    function startQuiz() {
+        // 獲取並處理名字
+        const nameInput = document.getElementById('user-name-input');
+        userName = nameInput.value.trim();
+        if (!userName) {
+            userName = "小小探險家"; // 預設名字
+        }
+
+        document.getElementById('name-screen').style.display = 'none';
         document.getElementById('quiz-screen').style.display = 'block';
         renderQuestion();
     }
@@ -849,11 +916,20 @@
         document.getElementById('r-desc').innerText = data.desc;
         document.getElementById('r-108').innerHTML = `<span class="tag-108">${data.code108}</span>`;
 
+        // === 修改這裡：插入使用者名字 ===
+        const analysisTitle = document.getElementById('analysis-title-text');
+        analysisTitle.innerHTML = `
+            <span class="user-name-highlight">${userName}</span>
+            <span style="font-size: 0.9em; color: var(--text-main);">的</span>
+            <span style="font-size: 1.5rem; margin: 0 5px;">📝</span>
+            角色解析與魔法素養
+        `;
+
         // 3. 填入名人
         const celebHTML = data.celebs.map(c => `<div class="celeb-tag">${c}</div>`).join('');
         document.getElementById('r-celebs').innerHTML = celebHTML;
 
-        // 4. 繪製雷達圖 (配色調整：柔和粉嫩色系)
+        // 4. 繪製雷達圖
         const ctx = document.getElementById('radarChart').getContext('2d');
         new Chart(ctx, {
             type: 'radar',
