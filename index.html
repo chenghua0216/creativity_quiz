@@ -20,14 +20,12 @@
         }
 
         body {
-            /* 嘗試使用圓體或手寫感字體 */
             font-family: "Comic Sans MS", "Chalkboard SE", "Yu Pearl", "PingFang TC", "Microsoft JhengHei", sans-serif;
-            /* 背景改為像桌面的顏色，讓中間的筆記本凸顯出來 */
             background-color: #E6DBC8; 
             background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjRTZEQkM4Ii8+CjxwYXRoIGQ9Ik0xIDNoMnYxSDF6IiBmaWxsPSIjRDhDMEE4IiBmaWxsLW9wYWNpdHk9IjAuNSIvPgo8L3N2Zz4='); /* 細微雜點紋理 */
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 10px; /* 減少外部邊距 */
             display: flex;
             justify-content: center;
             align-items: center; 
@@ -37,70 +35,56 @@
 
         .container {
             width: 100%;
-            max-width: 700px;
-            background: #FFF; /* 紙張背景白 */
-            
-            /* 筆記本線條與紅線設計 */
+            max-width: 700px; /* 稍微放寬容器 */
+            background: #FFF; 
             background-image: 
-                /* 左側紅色基準線 */
                 linear-gradient(90deg, transparent 59px, #FFCCBC 59px, #FFCCBC 61px, transparent 61px),
-                /* 水平橫線 (像作業簿) */
                 linear-gradient(#F0F4C3 1px, transparent 1px);
-            background-size: 100% 100%, 100% 30px; /* 紅線滿高，橫線每30px重複 */
+            background-size: 100% 100%, 100% 30px; 
             background-attachment: local;
-
-            /* 筆記本形狀 */
             border-radius: 5px 15px 15px 5px; 
             box-shadow: 
-                10px 10px 20px rgba(0,0,0,0.15), /* 桌面陰影 */
-                inset 20px 0 30px rgba(0,0,0,0.02); /* 紙張彎曲感 */
-            
-            /* 內距調整：左邊留多一點給裝訂邊 */
-            padding: 50px 40px 50px 80px;
+                10px 10px 20px rgba(0,0,0,0.15), 
+                inset 20px 0 30px rgba(0,0,0,0.02); 
+            padding: 30px 30px 30px 70px; /* 縮減上下內距，保留左側裝訂區 */
             position: relative;
             transition: all 0.3s ease;
-            
-            /* 移除原本的實線邊框，改用陰影表現紙張厚度 */
             border: none;
         }
 
-        /* 螺旋線圈裝訂效果 (Spiral Binding) */
+        /* 螺旋線圈裝訂效果 */
         .container::before {
             content: '';
             position: absolute;
-            left: 15px; /* 位於紅線左側 */
+            left: 15px; 
             top: 20px;
             bottom: 20px;
             width: 15px;
-            /* 模擬線圈孔洞與鐵絲 */
             background: radial-gradient(circle at center, #555 30%, transparent 35%);
-            background-size: 100% 30px; /* 對齊橫線間距 */
+            background-size: 100% 30px; 
             background-repeat: repeat-y;
-            /* 稍微加點陰影讓洞看起來有深度 */
             filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.8));
         }
 
-        /* 標題區：故事書標題 */
-        header { text-align: center; margin-bottom: 30px; position: relative; }
+        header { text-align: center; margin-bottom: 20px; position: relative; }
         
-        /* 標題背景塗鴉 */
         header::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -5px;
             left: 50%;
             transform: translateX(-50%) rotate(-2deg);
             width: 200px;
-            height: 15px;
-            background: rgba(255, 142, 114, 0.2); /* 螢光筆效果 */
+            height: 10px;
+            background: rgba(255, 142, 114, 0.2); 
             border-radius: 10px;
             z-index: 0;
         }
 
         h1 { 
             color: var(--primary); 
-            margin: 0 0 10px 0; 
-            font-size: 2rem; 
+            margin: 0 0 5px 0; 
+            font-size: 1.8rem; 
             font-weight: 900; 
             letter-spacing: 2px;
             position: relative;
@@ -108,41 +92,40 @@
         }
         .subtitle { 
             color: var(--text-light); 
-            font-size: 1rem; 
-            line-height: 1.6; 
+            font-size: 0.95rem; 
+            line-height: 1.4; 
             font-weight: 600;
         }
 
-        /* 六大亮能圖示列 - 修改為 Grid 佈局 */
+        /* 亮能圖示 Grid */
         .spectrum-icons {
             display: grid;
             grid-template-columns: repeat(3, auto);
             justify-content: center; 
-            gap: 20px 30px; 
-            margin: 30px 0;
+            gap: 15px 25px; 
+            margin: 20px 0;
         }
 
         .spectrum-icon-item {
-            width: 80px;  
-            height: 80px;
+            width: 70px;  
+            height: 70px;
             border-radius: 50%; 
             background: #ffffff;
-            border: 3px solid #E0E0E0; /* 預設淺灰框，不要全白以免在白紙上看不見 */
+            border: 3px solid #E0E0E0; 
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
-            padding: 12px; 
+            padding: 10px; 
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             overflow: hidden; 
         }
 
-        /* 互動樣式：背景維持白色，邊框變橘色 */
         .spectrum-icon-item:hover, .spectrum-icon-item:active {
-            transform: scale(1.15) rotate(5deg);
+            transform: scale(1.1);
             background: #ffffff; 
-            box-shadow: 0 8px 15px rgba(255, 142, 114, 0.2);
+            box-shadow: 0 6px 12px rgba(255, 142, 114, 0.2);
             border-color: var(--accent-1); 
         }
 
@@ -152,91 +135,22 @@
             object-fit: contain;
         }
 
-        /* Modal 樣式 */
-        .modal {
-            display: none;
-            position: fixed; 
-            z-index: 2000; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            background-color: rgba(93, 64, 55, 0.6); /* 深色遮罩讓筆記本更清楚 */
-            animation: fadeIn 0.4s;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(2px);
-        }
-        /* Modal 改成便條紙風格 */
-        .modal-content {
-            background-color: #FFF9C4; /* 黃色便條紙 */
-            padding: 40px;
-            border-radius: 2px; 
-            width: 85%; 
-            max-width: 450px;
-            position: relative;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            border: none;
-            transform: rotate(-1deg); /* 微微歪斜 */
-        }
-        /* 便條紙上方的膠帶 */
-        .modal-content::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            color: var(--primary);
-            font-size: 28px;
-            font-weight: 900;
-            cursor: pointer;
-            line-height: 1;
-        }
-        .close-modal:hover { opacity: 0.7; }
-        
-        .modal-title-text {
-            color: var(--primary);
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            display: inline-block;
-            border-bottom: 2px dashed var(--primary);
-            padding-bottom: 5px;
-        }
-        .modal-body-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-main);
-            text-align: justify;
-        }
-
-        /* 按鈕通用樣式：像貼紙或印章 */
+        /* 按鈕 */
         .btn {
             background-color: var(--accent-1); 
             color: white; 
             border: none;
-            padding: 12px 35px;
-            font-size: 1.2rem;
+            padding: 10px 30px;
+            font-size: 1.1rem;
             border-radius: 50px; 
             cursor: pointer;
             transition: all 0.3s ease;
             display: block;
-            margin: 30px auto 0;
+            margin: 20px auto 0;
             width: fit-content;
             font-weight: 800;
             letter-spacing: 1px;
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.15); /* 簡單陰影 */
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.15);
         }
         
         @media (hover: hover) {
@@ -251,19 +165,18 @@
             box-shadow: 1px 1px 0 rgba(0,0,0,0.15);
         }
 
-        /* 名字輸入區塊 (新增) */
+        /* 名字輸入區 */
         .name-section {
             display: none;
             text-align: center;
             animation: fadeIn 0.5s;
-            padding: 40px 0;
+            padding: 30px 0;
         }
 
         #user-name-input {
-            font-size: 1.8rem;
-            padding: 10px 20px;
+            font-size: 1.6rem;
+            padding: 8px 15px;
             border: none;
-            /* 手寫底線風格 */
             border-bottom: 3px dashed var(--accent-1);
             background: transparent;
             color: var(--primary);
@@ -271,215 +184,217 @@
             font-family: inherit;
             outline: none;
             width: 80%;
-            max-width: 300px;
+            max-width: 250px;
             font-weight: bold;
             transition: border-color 0.3s;
-        }
-        #user-name-input:focus {
-            border-bottom-color: var(--accent-2);
-        }
-        #user-name-input::placeholder {
-            color: #C0A080;
-            font-weight: normal;
         }
 
         /* 測驗區塊 */
         .quiz-section { display: none; animation: popIn 0.5s; }
         
-        /* 進度條：改為單一顏色 */
         .progress-bar {
             width: 100%;
-            height: 12px;
+            height: 10px;
             background: rgba(0,0,0,0.05);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             border-radius: 6px;
             overflow: hidden;
-            border: none;
         }
         .progress-fill {
             height: 100%;
-            background: var(--accent-2); /* 藍色蠟筆色 - 純色 */
+            background: var(--accent-2); 
             width: 0%;
             transition: width 0.5s ease;
             border-radius: 6px;
         }
 
-        #question-container {
-            transition: opacity 0.3s ease;
-            opacity: 1;
-        }
+        #question-container { transition: opacity 0.3s ease; opacity: 1; }
 
         .question-text {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             font-weight: 800; 
-            margin-bottom: 30px;
-            line-height: 1.5;
+            margin-bottom: 20px;
+            line-height: 1.4;
             color: var(--text-main);
-            /* 讓題目像是在紙上圈出來的重點 */
             background: rgba(255, 255, 255, 0.8);
             padding: 15px;
             border-radius: 10px;
-            border: 2px solid var(--accent-3); /* 黃框 */
+            border: 2px solid var(--accent-3); 
         }
 
-        .options-grid { display: grid; gap: 18px; }
+        .options-grid { display: grid; gap: 12px; }
         
         .option-card {
             background: #fff;
-            border: 2px solid #DDD; /* 像卡片 */
-            padding: 15px 20px;
+            border: 2px solid #DDD; 
+            padding: 12px 18px;
             border-radius: 10px; 
             cursor: pointer;
             text-align: left;
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: var(--text-main);
             transition: all 0.2s;
-            line-height: 1.5;
+            line-height: 1.4;
             -webkit-tap-highlight-color: transparent;
             font-weight: 600;
             box-shadow: 2px 2px 0 #EEE;
         }
 
-        /* Hover 效果：變色邊框 */
-        @media (hover: hover) {
-            .option-card:hover {
-                border-color: var(--accent-3); /* 黃色 */
-                background: #FFFDE7;
-                transform: translateX(3px);
-                color: var(--primary);
-            }
-        }
+        .option-card:active { transform: scale(0.99); background: #FFFDE7; border-color: var(--accent-3); }
+        .option-card.selected { border-color: var(--accent-1); background: #FFEBEE; color: var(--primary); box-shadow: none; }
 
-        .option-card:active {
-            transform: scale(0.99); 
-            background: #FFFDE7;
-            border-color: var(--accent-3);
-        }
-
-        .option-card.selected {
-            border-color: var(--accent-1); 
-            background: #FFEBEE; /* 粉紅底 */
-            color: var(--primary);
-            box-shadow: none;
-        }
-
-        /* 結果區塊 */
+        /* 結果區塊 - 卡片風格優化 */
         .result-section { display: none; animation: popIn 0.8s; }
         
-        .archetype-header { text-align: center; margin-bottom: 20px; }
-        .archetype-label { 
-            font-size: 0.95rem; 
-            color: #FFF; 
-            background: var(--accent-2); /* 藍底標籤 */
-            padding: 5px 15px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 10px; 
-            font-weight: 800; 
-            box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        /* 專屬牌卡容器 */
+        .collectible-card {
+            background: #FFF;
+            border: 6px solid #FFF; 
+            border-radius: 16px;
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(0,0,0,0.05); 
+            padding: 0;
+            width: 100%;
+            max-width: 550px; /* 加寬卡片 */
+            margin: 0 auto; 
+            overflow: hidden;
+            position: relative;
+            /* 移除旋轉，節省邊緣空間，確保一頁式 */
+            transform: rotate(0deg); 
         }
-        .archetype-title { 
-            font-size: 2.4rem; 
-            color: var(--accent-1); 
-            margin: 10px 0; 
-            font-weight: 900; 
+
+        /* 卡片頭部：Flex 佈局，Logo 在左 */
+        .card-header-flex {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px; /* 緊湊的內距 */
+            color: #FFF;
+            position: relative;
+        }
+
+        .card-avatar-left {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: #FFF;
+            border-radius: 50%;
+            border: 4px solid #FFF; /* 內白框 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-right: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            overflow: hidden;
         }
-        .archetype-slogan { 
-            font-style: italic;
-            color: var(--text-light); 
-            font-size: 1.1rem; 
-            padding: 5px 0;
-            display: inline-block;
-            border-bottom: 2px solid #EEE;
+        .card-avatar-left img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
         }
 
-        .chart-container {
-            position: relative;
-            height: 320px;
+        .card-info-right {
+            flex-grow: 1;
+            text-align: left; /* 文字靠左 */
+        }
+
+        .card-badge {
+            background: rgba(255,255,255,0.25);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .card-user-name {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin: 0;
+            line-height: 1.2;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        /* 卡片內容區 */
+        .card-body {
+            padding: 15px 20px;
+            background: #fff;
+        }
+
+        .card-chart-container {
+            height: 180px; /* 降低高度以適應一頁 */
             width: 100%;
-            margin: 20px 0;
-            /* 讓圖表區像貼在筆記本上的照片 */
-            background: #FFF;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            box-shadow: 3px 3px 8px rgba(0,0,0,0.05);
-            transform: rotate(-1deg);
+            margin-bottom: 10px;
         }
 
-        .analysis-box {
-            background: transparent;
-            /* 移除原本的框，改用文字排版 */
-            padding: 20px 0;
-            margin-top: 10px;
-            position: relative;
-        }
-
-        .analysis-title { 
-            font-weight: 900; 
-            color: var(--primary); 
-            margin-bottom: 15px; 
-            display: flex; 
-            align-items: center; 
-            font-size: 1.2rem; 
-            flex-wrap: wrap; /* 讓名字太長時可以換行 */
-            /* 標題底線 */
-            text-decoration: underline;
-            text-decoration-color: var(--accent-3);
-            text-decoration-thickness: 3px;
-        }
-
-        /* 新增：使用者名字高亮樣式 */
-        .user-name-highlight {
-            font-size: 1.8rem; /* 字級較大 */
+        .card-slogan {
+            font-family: "KaiTi", "BiauKai", serif; 
+            font-size: 1.05rem;
             color: var(--accent-1);
-            margin-right: 5px;
-            display: inline-block;
-        }
-
-        .analysis-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-main); text-align: justify; }
-        
-        .tag-108 {
-            display: inline-block;
-            background: #FFF;
-            border: 2px solid var(--accent-2);
-            color: var(--accent-2); 
-            padding: 8px 15px;
-            border-radius: 20px; 
-            font-size: 0.9rem;
-            margin-top: 20px;
-            font-weight: 700;
-            line-height: 1.4;
-        }
-
-        .celebs-box {
-            margin-top: 30px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-style: italic;
             text-align: center;
         }
-        .celeb-list {
+
+        .card-desc {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #555;
+            text-align: justify;
+            margin-bottom: 12px;
+            background: #F9F9F9;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .card-footer-section {
+            border-top: 1px dashed #EEE;
+            padding-top: 10px;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
+        .card-tags {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
-            margin-top: 15px;
+            gap: 6px;
         }
-        .celeb-tag {
-            background: #F5F5F5;
-            border: 1px solid #CCC;
-            padding: 6px 15px;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            color: var(--text-light);
+        
+        .mini-tag {
+            background: #EFF3F4;
+            color: #666;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-108 {
+            display: block;
+            background: var(--accent-3); 
+            color: #5D4037;
+            padding: 6px 12px;
+            border-radius: 8px; 
+            font-size: 0.85rem;
             font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
         }
 
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.95); }
+            0% { opacity: 0; transform: scale(0.98); }
             100% { opacity: 1; transform: scale(1); }
         }
 
@@ -488,19 +403,64 @@
             to { opacity: 1; }
         }
 
-        /* RWD */
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed; 
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(93, 64, 55, 0.6);
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+        }
+        .modal-content {
+            background-color: #FFF9C4;
+            padding: 30px;
+            border-radius: 2px; 
+            width: 85%; 
+            max-width: 400px;
+            position: relative;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+        .close-modal {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #5D4037;
+        }
+        .modal-title-text {
+            font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: #5D4037;
+            border-bottom: 2px dashed #5D4037; display: inline-block;
+        }
+        .modal-body-text { font-size: 1rem; line-height: 1.6; color: #333; }
+
+        /* RWD 調整 */
         @media (max-width: 600px) {
             .container { 
-                padding: 40px 20px 40px 50px; /* 手機版左側內距減少一點 */
-                width: 100%; 
-                border-radius: 0; /* 手機滿版 */
+                padding: 20px 15px 20px 45px; /* 手機版內距 */
+                border-radius: 0; 
+                width: 100%;
             } 
             body { padding: 0; }
-            .archetype-title { font-size: 1.8rem; }
-            h1 { font-size: 1.6rem; }
-            .spectrum-icons { gap: 15px; }
-            .spectrum-icon-item { width: 65px; height: 65px; }
-            .btn { width: 100%; box-sizing: border-box; } 
+            .spectrum-icons { gap: 10px; }
+            .spectrum-icon-item { width: 60px; height: 60px; }
+            
+            /* 手機版卡片樣式 */
+            .collectible-card { max-width: 100%; border-width: 0; box-shadow: none; border-radius: 10px; }
+            /* 手機版頭部：為了省空間，可以稍微縮小 */
+            .card-header-flex { padding: 15px; }
+            .card-avatar-left { width: 60px; height: 60px; margin-right: 15px; }
+            .card-user-name { font-size: 1.4rem; }
+            .card-title { font-size: 0.9rem; }
+            .btn { margin-top: 15px; }
         }
     </style>
 </head>
@@ -516,29 +476,22 @@
             </div>
         </header>
 
-        <!-- 六個圖案 Grid 排列 -->
         <div class="spectrum-icons">
-            <!-- C: Consciousness -->
             <div class="spectrum-icon-item" data-desc="覺察 Consciousness：「覺察」是創造力的起點。它超越了單純的看見，而是指能自我感官調節，細膩地接收內在的情緒波動以及外在環境的細微變化。這是一種勇於面對未知體驗的心理準備狀態。" title="覺察 (Consciousness)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Consciousness.png?raw=true" alt="覺察力">
             </div>
-            <!-- R: Realization -->
             <div class="spectrum-icon-item" data-desc="表達 Realization：「表達」是內在轉化為外在的過程。這不僅僅是說話或畫畫，而是將無形的想法、複雜的情緒或抽象的觀點，透過適當的媒介（文字、圖像、肢體、聲音等）賦予形式，且能以獨特的方式與世界對話。" title="表達 (Realization)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Realization%20.png?raw=true" alt="表達力">
             </div>
-            <!-- D: Engagement (Drive) -->
             <div class="spectrum-icon-item" data-desc="驅動 Engagement：「驅動」關乎創造力的續航力。它不是為了外在獎勵獲肯定而做，而是源於內在的熱情、好奇或意義感。這是一種穩定的心理支持力量，讓我們在面對挑戰時，能自我激勵，甚至進入心流狀態的能力。" title="驅動 (Engagement)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Engagement.png?raw=true" alt="驅動力">
             </div>
-            <!-- A: Alignment -->
             <div class="spectrum-icon-item" data-desc="合作 Alignment：「合作」是將個人創造力擴展為集體智慧的關鍵。Alignment 原意為「校準」、「對齊」，這意味著合作不僅是分工，更是頻率的調和。我們需要理解他人的觀點，建立關係，並在保有自我的同時與團隊目標達成一致。這是同理心與社會技巧的綜合展現。" title="合作 (Alignment)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Alignment%20.png?raw=true" alt="合作力">
             </div>
-            <!-- T: Trial -->
             <div class="spectrum-icon-item" data-desc="探索 Trial：「探索」是對現狀的挑戰與可能性的開拓。允許自己好奇與冒險，也有勇氣脫離舒適圈，去問「為什麼？」和「如果...會怎樣？」。這項能力著重於發散性思考以及對失敗的寬容，因為嘗試過程就存在價值。" title="探索 (Trial)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Trial.png?raw=true" alt="探索力">
             </div>
-            <!-- E: Execution -->
             <div class="spectrum-icon-item" data-desc="實踐 Execution：「實踐」是創造力旅程的終點，也是新循環的起點。將學習過程的啟發落實為真實生活中的選擇與行動，需要執行力、規劃力以及將抽象概念應用於現實生活的能力。" title="實踐 (Execution)">
                 <img src="https://github.com/chenghua0216/figures/blob/main/Execution.png?raw=true" alt="實踐力">
             </div>
@@ -546,13 +499,11 @@
 
         <button class="btn" onclick="goToNameScreen()">開始探索</button>
 
-        <!-- Logo 區域 -->
-        <div style="text-align: center; margin-top: 50px;">
-            <img src="https://github.com/chenghua0216/figures/blob/main/logo.png?raw=true" alt="立賢教育基金會 Logo" style="width: 140px; height: auto;">
+        <div style="text-align: center; margin-top: 30px;">
+            <img src="https://github.com/chenghua0216/figures/blob/main/logo.png?raw=true" alt="立賢教育基金會 Logo" style="width: 120px; height: auto;">
         </div>
     </div>
 
-    <!-- 輸入名字區塊 (新增) -->
     <div id="name-screen" class="name-section">
         <h2 style="color: var(--primary); margin-bottom: 30px; font-weight: 800;">✎ 請問你的名字是？</h2>
         <input type="text" id="user-name-input" placeholder="請寫下你的暱稱..." maxlength="10">
@@ -568,36 +519,11 @@
     </div>
 
     <div id="result-screen" class="result-section">
-        <div class="archetype-header">
-            <div class="archetype-label">★ 你的創造力角色 ★</div>
-            <h2 class="archetype-title" id="r-title">分析中...</h2>
-            <div class="archetype-slogan" id="r-slogan"></div>
-        </div>
-
-        <div class="chart-container">
-            <canvas id="radarChart"></canvas>
-        </div>
-
-        <div class="analysis-box">
-            <!-- 修改這裡：加入 ID 以便 JS 操作 -->
-            <div class="analysis-title" id="analysis-title-text">
-                <span style="font-size: 1.5rem; margin-right: 10px;">📝</span>
-                角色解析與魔法素養
-            </div>
-            <div class="analysis-text" id="r-desc"></div>
-            <div id="r-108"></div>
-        </div>
-
-        <div class="celebs-box">
-            <div style="font-weight: 800; color: var(--text-light); margin-bottom: 15px; font-size: 1rem;">✨ 和你一樣的創意大師 ✨</div>
-            <div class="celeb-list" id="r-celebs"></div>
-        </div>
-
-        <button class="btn" onclick="location.reload()">再玩一次 ↺</button>
+        <div id="card-placeholder"></div>
+        <button class="btn" onclick="location.reload()" style="margin-top: 20px; padding: 8px 25px; font-size: 1rem;">再玩一次 ↺</button>
     </div>
 </div>
 
-<!-- 說明 Modal -->
 <div id="info-modal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
@@ -607,223 +533,93 @@
 
 <script>
     // === 資料庫設定 ===
-    
-    // 定義六大亮能
     const traits = {
-        C: "覺察力 (Consciousness)",
-        R: "表達力 (Realization)",
-        D: "驅動力 (Drive)",
-        A: "合作力 (Alignment)",
-        T: "探索力 (Trial)",
-        E: "實踐力 (Execution)"
+        C: "覺察力", R: "表達力", D: "驅動力", A: "合作力", T: "探索力", E: "實踐力"
     };
 
-    // 題目設計
     const questions = [
-        // ... (題目維持不變) ...
-        // 1. 自我探索
-        {
-            text: "當我感到「創造力消失」的時候，我通常會？",
-            options: [
-                { text: "閉上眼什麼都不做，讓自己休息，靜靜等待靈感回流。", scores: { C: 3, D: 1 } },
-                { text: "雖然痛苦，但我會強迫自己繼續做下去，直到突破瓶頸。", scores: { D: 3, E: 1 } },
-                { text: "找朋友聊聊天，或許他們的幾句話就能重新點燃我。", scores: { A: 3, R: 1 } }
-            ]
-        },
-        // 2. 自我探索
-        {
-            text: "如果必須用一種樂器來代表你的個性，你會選擇？",
-            options: [
-                { text: "鋼琴或小提琴。能細膩地表達情感，也能展現豐富的層次。", scores: { R: 3, C: 1 } },
-                { text: "爵士鼓。充滿節奏感與爆發力，是驅動整首樂曲的心臟。", scores: { D: 3, E: 1 } },
-                { text: "電子合成器。充滿實驗性，能創造出前所未有的聲音。", scores: { T: 3, R: 1 } }
-            ]
-        },
-        // 3. 觀察與欣賞
-        {
-            text: "在路邊看到一個被丟棄、生鏽的鐵罐，你的第一個反應是？",
-            options: [
-                { text: "覺得它生鏽的紋理和顏色很美，彷彿看見了時間的痕跡。", scores: { C: 3, R: 1 } },
-                { text: "思考它為什麼會在這裡？原本是裝什麼的？背後有什麼故事？", scores: { T: 3, C: 1 } },
-                { text: "想撿起來帶回去，也許能在下次創作或改造中派上用場。", scores: { E: 3, T: 1 } }
-            ]
-        },
-        // 4. 觀察與欣賞
-        {
-            text: "看到一件原本會被回收的紙箱，你會如何賦予它新生命？",
-            options: [
-                { text: "拿起畫筆在上面塗鴉，把它變成一件獨特的裝置藝術。", scores: { R: 3, T: 1 } },
-                { text: "動手裁剪拼貼，把它改造成實用的收納盒或貓屋。", scores: { E: 3, A: 1 } },
-                { text: "邀請孩子或朋友一起來，用它搭建一個秘密基地。", scores: { A: 3, D: 1 } }
-            ]
-        },
-        // 5. 發明與解決問題
-        {
-            text: "如果要設計一台「讓生氣的人瞬間笑出來」的機器，你的設計核心是？",
-            options: [
-                { text: "感應情緒機制。先同理他的憤怒，再給予溫暖的擁抱。", scores: { C: 3, A: 1 } },
-                { text: "瘋狂實驗室。隨機噴出彩帶、播放怪聲音，用出乎意料的方式逗樂他。", scores: { T: 3, R: 1 } },
-                { text: "搔癢機械手臂。直接針對生理反應，用最實際的物理方式讓他笑。", scores: { E: 3, D: 1 } }
-            ]
-        },
-        // 6. 發明與解決問題
-        {
-            text: "想像一種混合了兩種現有動物的新生物，你會最在意牠的什麼？",
-            options: [
-                { text: "牠的外型是否獨特美觀，我會想把牠詳細地畫下來。", scores: { R: 3, C: 1 } },
-                { text: "牠在生態系中的功能，例如是否能幫助環境或保護其他弱小動物。", scores: { A: 3, E: 1 } },
-                { text: "牠的生存能力，例如是否有強大的翅膀或適應極端氣候的能力。", scores: { T: 3, D: 1 } }
-            ]
-        },
-        // 7. 想像力與假設
-        {
-            text: "如果真的能跟植物溝通，你會對路邊的小草說什麼？",
-            options: [
-                { text: "「你在這裡過得好嗎？有沒有什麼不舒服的地方？」", scores: { C: 3, A: 1 } },
-                { text: "「你的根是怎麼往下鑽的？教我你生存的秘訣！」", scores: { T: 3, E: 1 } },
-                { text: "我不會說話，我會對著它唱歌，分享我的快樂。", scores: { R: 3, D: 1 } }
-            ]
-        },
-        // 8. 想像力與假設
-        {
-            text: "想像世界上的地心引力突然減半，你覺得生活最大的改變是？",
-            options: [
-                { text: "新的運動與交通方式會誕生，人類將發明更多飛行的裝置。", scores: { T: 3, E: 1 } },
-                { text: "人們的肢體語言會變得更輕盈優雅，舞蹈和表演藝術會徹底改變。", scores: { R: 3, C: 1 } },
-                { text: "大家能更輕鬆地搬運重物，互相幫助的門檻變低了。", scores: { A: 3, E: 1 } }
-            ]
-        },
-        // 9. 創造力哲學
-        {
-            text: "關於「說謊」和「講故事」，你認為這兩者的差別在於？",
-            options: [
-                { text: "意圖的不同。一個是為了欺騙，一個是為了啟發或感動。", scores: { C: 3, A: 1 } },
-                { text: "技巧的高低。講故事需要更高的架構能力與表達技巧。", scores: { R: 3, E: 1 } },
-                { text: "結果的真實性。故事是為了創造一個新的真實，謊言是為了掩蓋舊的真實。", scores: { T: 3, C: 1 } }
-            ]
-        },
-        // 10. 創造力哲學
-        {
-            text: "如果 AI 機器人畫了一幅很美的畫，你認為它具有創造力嗎？",
-            options: [
-                { text: "不算。它缺乏「靈魂」與「內在驅動力」，只是模仿數據的結果。", scores: { D: 3, C: 1 } },
-                { text: "算。只要產出的結果能解決視覺問題或帶來美感，就是創造。", scores: { E: 3, T: 1 } },
-                { text: "不重要。重要的是這幅畫能否連結人心，引發大家的討論。", scores: { A: 3, R: 1 } }
-            ]
-        },
-        // 11. 行動與遊戲
-        {
-            text: "現在試著用你的「非慣用手」寫下名字或畫個圓，你的感受是？",
-            options: [
-                { text: "好不舒服，但我喜歡這種挑戰大腦、跳脫舒適圈的感覺。", scores: { T: 3, D: 1 } },
-                { text: "線條歪歪扭扭的，這其實有一種拙趣和獨特的美感。", scores: { R: 3, C: 1 } },
-                { text: "我會多練習幾次，直到我能控制肌肉，把它寫得工整為止。", scores: { E: 3, D: 1 } }
-            ]
-        },
-        // 12. 行動與遊戲
-        {
-            text: "如果要發明一種新的「打招呼方式」並教給朋友，你會設計？",
-            options: [
-                { text: "一個包含擊掌、轉圈的複雜動作，充滿活力與儀式感。", scores: { D: 3, E: 1 } },
-                { text: "一個眼神交流搭配手勢，能瞬間確認彼此的默契與連結。", scores: { A: 3, C: 1 } },
-                { text: "一個搞怪的鬼臉或聲音，目的是為了打破尷尬，讓氣氛輕鬆。", scores: { R: 3, T: 1 } }
-            ]
-        },
-        // 13. 藝術欣賞
-        {
-            text: "請欣賞馬諦斯的剪紙名作《蝸牛》。看著這幅畫，你當下最強烈的感受是？<br><br><img src='https://uploads4.wikiart.org/images/henri-matisse/the-snail-1953.jpg' alt='馬諦斯-蝸牛' style='width: 100%; max-width: 280px; border-radius: 15px; border:2px dashed #E0C09E; margin-top: 15px;'>",
-            options: [
-                { text: "真神奇！明明只是色塊的拼貼，閉上眼，彷彿能感覺到蝸牛緩慢的移動與生命力。", scores: { C: 3, A: 1 } },
-                { text: "哇，我沒想到這是蝸牛耶！我也想拿剪刀隨意剪貼，試試看只用幾個色塊能拼出什麼有趣的東西。", scores: { T: 3, D: 1 } },
-                { text: "馬諦斯捨棄了細節，將蝸牛的概念抽象化成為純粹的顏色與結構。", scores: { R: 3, E: 1 } }
-            ]
-        },
-        // 14. 想像力
-        {
-            text: "如果要寫一本標題為《2983》的小說，你的直覺告訴你，這會是一個什麼樣的故事？<br><br><img src='https://raw.githubusercontent.com/chenghua0216/creativity_quiz/16a01d6ea0a6ac5d020467376ad8ececa0ac0684/2983.png' alt='2983' style='width: 100%; max-width: 280px; border-radius: 15px; border:2px dashed #E0C09E; margin-top: 15px;'>",
-            options: [
-                { text: "設定在西元2983年的未來寓言。探討在高度科技或末日後的世界，人類是否還保有身而為人的本質和情感。", scores: { T: 3, C: 1 } },
-                { text: "這是一個計數。可能是「想念你的第2983天」或「第2983封沒寄出的信」。這是關於記憶與情感的細膩故事。", scores: { R: 3, A: 1 } },
-                { text: "這是一個關鍵密碼、倒數秒數，代號2983的機密行動。故事節奏緊湊，主角必須在極限壓力下完成任務。", scores: { D: 3, E: 1 } }
-            ]
-        }
+        { text: "當我感到「創造力消失」的時候，我通常會？", options: [{ text: "閉上眼什麼都不做，讓自己休息，靜靜等待靈感回流。", scores: { C: 3, D: 1 } }, { text: "雖然痛苦，但我會強迫自己繼續做下去，直到突破瓶頸。", scores: { D: 3, E: 1 } }, { text: "找朋友聊聊天，或許他們的幾句話就能重新點燃我。", scores: { A: 3, R: 1 } }] },
+        { text: "如果必須用一種樂器來代表你的個性，你會選擇？", options: [{ text: "鋼琴或小提琴。能細膩地表達情感，也能展現豐富的層次。", scores: { R: 3, C: 1 } }, { text: "爵士鼓。充滿節奏感與爆發力，是驅動整首樂曲的心臟。", scores: { D: 3, E: 1 } }, { text: "電子合成器。充滿實驗性，能創造出前所未有的聲音。", scores: { T: 3, R: 1 } }] },
+        { text: "在路邊看到一個被丟棄、生鏽的鐵罐，你的第一個反應是？", options: [{ text: "覺得它生鏽的紋理和顏色很美，彷彿看見了時間的痕跡。", scores: { C: 3, R: 1 } }, { text: "思考它為什麼會在這裡？原本是裝什麼的？背後有什麼故事？", scores: { T: 3, C: 1 } }, { text: "想撿起來帶回去，也許能在下次創作或改造中派上用場。", scores: { E: 3, T: 1 } }] },
+        { text: "找出一件原本被視為「廢棄物」的紙箱，你會如何賦予它新生命？", options: [{ text: "拿起畫筆在上面塗鴉，把它變成一件獨特的裝置藝術。", scores: { R: 3, T: 1 } }, { text: "動手裁剪拼貼，把它改造成實用的收納盒或貓屋。", scores: { E: 3, A: 1 } }, { text: "邀請孩子或朋友一起來，用它搭建一個秘密基地。", scores: { A: 3, D: 1 } }] },
+        { text: "如果受邀設計一台「讓生氣的人瞬間笑出來」的機器，你的設計核心是？", options: [{ text: "感應情緒機制。先同理他的憤怒，再給予溫暖的擁抱。", scores: { C: 3, A: 1 } }, { text: "瘋狂實驗室。隨機噴出彩帶、播放怪聲音，用出乎意料的方式逗樂他。", scores: { T: 3, R: 1 } }, { text: "搔癢機械手臂。直接針對生理反應，用最實際的物理方式讓他笑。", scores: { E: 3, D: 1 } }] },
+        { text: "想像一種混合了兩種現有動物的新生物，你會最在意牠的什麼？", options: [{ text: "牠的外型是否獨特美觀，我會想把牠詳細地畫下來。", scores: { R: 3, C: 1 } }, { text: "牠在生態系中的功能，例如是否能幫助環境或保護其他弱小動物。", scores: { A: 3, E: 1 } }, { text: "牠的生存能力，例如是否有強大的翅膀或適應極端氣候的能力。", scores: { T: 3, D: 1 } }] },
+        { text: "如果真的能跟植物溝通，你會對路邊的小草說什麼？", options: [{ text: "「你在這裡過得好嗎？有沒有什麼不舒服的地方？」", scores: { C: 3, A: 1 } }, { text: "「你的根是怎麼往下鑽的？教我你生存的秘訣！」", scores: { T: 3, E: 1 } }, { text: "我不會說話，我會對著它唱歌，分享我的快樂。", scores: { R: 3, D: 1 } }] },
+        { text: "想像世界上的地心引力突然減半，你覺得生活最大的改變是？", options: [{ text: "新的運動與交通方式會誕生，人類將發明更多飛行的裝置。", scores: { T: 3, E: 1 } }, { text: "人們的肢體語言會變得更輕盈優雅，舞蹈和表演藝術會徹底改變。", scores: { R: 3, C: 1 } }, { text: "大家能更輕鬆地搬運重物，互相幫助的門檻變低了。", scores: { A: 3, E: 1 } }] },
+        { text: "關於「說謊」和「講故事」，你認為這兩者的差別在於？", options: [{ text: "意圖的不同。一個是為了欺騙，一個是為了啟發或感動。", scores: { C: 3, A: 1 } }, { text: "技巧的高低。講故事需要更高的架構能力與表達技巧。", scores: { R: 3, E: 1 } }, { text: "結果的真實性。故事是為了創造一個新的真實，謊言是為了掩蓋舊的真實。", scores: { T: 3, C: 1 } }] },
+        { text: "如果 AI 機器人畫了一幅很美的畫，你認為它具有創造力嗎？", options: [{ text: "不算。它缺乏「靈魂」與「內在驅動力」，只是模仿數據的結果。", scores: { D: 3, C: 1 } }, { text: "算。只要產出的結果能解決視覺問題或帶來美感，就是創造。", scores: { E: 3, T: 1 } }, { text: "不重要。重要的是這幅畫能否連結人心，引發大家的討論。", scores: { A: 3, R: 1 } }] },
+        { text: "現在試著用你的「非慣用手」寫下名字或畫個圓，你的感受是？", options: [{ text: "好不舒服，但我喜歡這種挑戰大腦、跳脫舒適圈的感覺。", scores: { T: 3, D: 1 } }, { text: "線條歪歪扭扭的，這其實有一種拙趣和獨特的美感。", scores: { R: 3, C: 1 } }, { text: "我會多練習幾次，直到我能控制肌肉，把它寫得工整為止。", scores: { E: 3, D: 1 } }] },
+        { text: "如果要發明一種新的「打招呼方式」並教給朋友，你會設計？", options: [{ text: "一個包含擊掌、轉圈的複雜動作，充滿活力與儀式感。", scores: { D: 3, E: 1 } }, { text: "一個眼神交流搭配手勢，能瞬間確認彼此的默契與連結。", scores: { A: 3, C: 1 } }, { text: "一個搞怪的鬼臉或聲音，目的是為了打破尷尬，讓氣氛輕鬆。", scores: { R: 3, T: 1 } }] },
+        { text: "請欣賞馬諦斯的剪紙名作《蝸牛》。看著這幅畫，你當下最強烈的感受是？<br><br><img src='https://uploads4.wikiart.org/images/henri-matisse/the-snail-1953.jpg' alt='馬諦斯-蝸牛' style='width: 100%; max-width: 250px; border-radius: 15px; border:2px dashed #E0C09E; margin-top: 15px;'>", options: [{ text: "真神奇！明明只是色塊的拼貼，閉上眼，彷彿能感覺到蝸牛緩慢的移動與生命力。", scores: { C: 3, A: 1 } }, { text: "哇，我沒想到這是蝸牛耶！我也想拿剪刀隨意剪貼，試試看只用幾個色塊能拼出什麼有趣的東西。", scores: { T: 3, D: 1 } }, { text: "馬諦斯捨棄了細節，將蝸牛的概念抽象化成為純粹的顏色與結構。", scores: { R: 3, E: 1 } }] },
+        { text: "如果要寫一本標題為《2983》的小說，你的直覺告訴你，這會是一個什麼樣的故事？<br><br><img src='https://raw.githubusercontent.com/chenghua0216/creativity_quiz/16a01d6ea0a6ac5d020467376ad8ececa0ac0684/2983.png' alt='2983' style='width: 100%; max-width: 250px; border-radius: 15px; border:2px dashed #E0C09E; margin-top: 15px;'>", options: [{ text: "設定在西元2983年的未來寓言。探討在高度科技或末日後的世界，人類是否還保有身而為人的本質和情感。", scores: { T: 3, C: 1 } }, { text: "這是一個計數。可能是「想念你的第2983天」或「第2983封沒寄出的信」。這是關於記憶與情感的細膩故事。", scores: { R: 3, A: 1 } }, { text: "這是一個關鍵密碼、倒數秒數，代號2983的機密行動。故事節奏緊湊，主角必須在極限壓力下完成任務。", scores: { D: 3, E: 1 } }] }
     ];
 
-    // 結果分析資料庫
     const archetypes = {
         C: {
             title: "澄澈的哲思者",
             img: "https://github.com/chenghua0216/figures/blob/main/Consciousness.png?raw=true",
             slogan: "「於靜默中聽見雷鳴，於微塵中看見世界。」",
             desc: "你的優勢亮能是「覺察力」。你擁有極敏銳的感知能力，這不僅是對外在環境的觀察，更是對內在情緒的覺知。在喧囂的世界中，你總能保持清醒，看見別人忽略的本質。",
-            code108: "★ 108 課綱連結 (A1 身心素質)：你的覺察力是「自我精進」的起點，具備理解並調適身心狀態的基礎能力。",
-            celebs: ["達賴喇嘛 (精神領袖)", "珍·古德 (動物學家)", "是枝裕和 (導演)"]
+            code108: "★ 108 課綱 (A1 身心素質)：覺察力是「自我精進」的起點。",
+            celebs: ["達賴喇嘛", "珍·古德", "是枝裕和"]
         },
         R: {
             title: "靈魂的轉譯者",
             img: "https://github.com/chenghua0216/figures/blob/main/Realization%20.png?raw=true",
             slogan: "「將無形化為有形，讓世界聽見你的頻率。」",
             desc: "你的優勢亮能是「表達力」。你是天生的溝通者，擅長將抽象的想法、複雜的情緒轉化為具體的作品。無論透過文字、藝術或語言，你總能賦予無形事物有形的感動。",
-            code108: "★ 108 課綱連結 (B1 符號運用)：這正是「表達力」的核心，你具備透過多元媒介進行溝通與創作的素養。",
-            celebs: ["宮崎駿 (動畫大師)", "J.K. 羅琳 (作家)", "林懷民 (雲門舞集)"]
+            code108: "★ 108 課綱 (B1 符號運用)：這正是「表達力」的核心。",
+            celebs: ["宮崎駿", "J.K. 羅琳", "林懷民"]
         },
         D: {
             title: "熱情的燃燈者",
             img: "https://github.com/chenghua0216/figures/blob/main/Engagement.png?raw=true",
             slogan: "「內在的火炬，是推動世界前進的燃料。」",
             desc: "你的優勢亮能是「驅動力」。你擁有源源不絕的內在引擎，不需要外在獎賞，挑戰本身就是你的養分。你容易進入「心流」狀態，擁有強大的心理韌性。",
-            code108: "★ 108 課綱連結 (A1/自主行動)：驅動力是「自主行動」的燃料。你具備終身學習者最關鍵的「內在動機」。",
-            celebs: ["Kobe Bryant (曼巴精神)", "馬友友 (熱愛音樂)", "湯姆·克魯斯 (極致追求)"]
+            code108: "★ 108 課綱 (A1/自主行動)：驅動力是「自主行動」的燃料。",
+            celebs: ["Kobe Bryant", "馬友友", "湯姆·克魯斯"]
         },
         A: {
             title: "溫暖的編織者",
             img: "https://github.com/chenghua0216/figures/blob/main/Alignment%20.png?raw=true",
             slogan: "「一個人走得快，一群人走得遠。」",
             desc: "你的優勢亮能是「合作力」。你是團隊中的黏著劑，深知連結的力量。你擅長傾聽、換位思考，並能整合不同意見，創造 1+1>2 的共好價值。",
-            code108: "★ 108 課綱連結 (C2 人際關係)：完美對應。你具備理解他人、建立良好互動並參與團隊合作的素養。",
-            celebs: ["歐巴馬 (擅長連結)", "歐普拉 (共感傾聽)", "德蕾莎修女 (人道主義)"]
+            code108: "★ 108 課綱 (C2 人際關係)：具備理解他人與合作素養。",
+            celebs: ["歐巴馬", "歐普拉", "德蕾莎修女"]
         },
         T: {
             title: "無畏的拓荒者",
             img: "https://github.com/chenghua0216/figures/blob/main/Trial.png?raw=true",
             slogan: "「未知不是恐懼，而是邀請。」",
             desc: "你的優勢亮能是「探索力」。你的好奇心是你最大的資產。你不怕犯錯，甚至享受試錯的過程。你喜歡問「為什麼」和「如果...會怎樣」，是打破框架的創新者。",
-            code108: "★ 108 課綱連結 (A2 系統思考)：你的探索精神是解決問題的基石，具備面對未知主動提問與創新應變的能力。",
-            celebs: ["伊隆·馬斯克 (SpaceX)", "理查·費曼 (科學頑童)", "達文西 (跨域探索)"]
+            code108: "★ 108 課綱 (A2 系統思考)：解決問題的基石。",
+            celebs: ["伊隆·馬斯克", "理查·費曼", "達文西"]
         },
         E: {
             title: "堅毅的築夢者",
             img: "https://github.com/chenghua0216/figures/blob/main/Execution.png?raw=true",
             slogan: "「夢想若不落地，僅是幻影。」",
             desc: "你的優勢亮能是「實踐力」。你是讓夢想落地的人。你不僅止於空想，更重視行動。你具備強大的執行功能，能將創意拆解為步驟，並在真實生活中實踐出來。",
-            code108: "★ 108 課綱連結 (A3 規劃執行)：強調將構想轉化為行動。你具備規劃、執行並在生活中落實創意的能力。",
-            celebs: ["史蒂夫·賈伯斯 (蘋果)", "張忠謀 (台積電)", "齊柏林 (看見台灣)"]
+            code108: "★ 108 課綱 (A3 規劃執行)：將構想轉化為行動。",
+            celebs: ["史蒂夫·賈伯斯", "張忠謀", "齊柏林"]
         }
     };
 
-    // === 程式邏輯 ===
     let currentQ = 0;
     let scores = { C: 0, R: 0, D: 0, A: 0, T: 0, E: 0 };
-    let isTransitioning = false; // 防止重複點擊的旗標
-    let userName = ""; // 新增：儲存使用者名字
+    let isTransitioning = false;
+    let userName = "";
 
-    // 步驟 1: 前往名字輸入頁
     function goToNameScreen() {
         document.getElementById('start-screen').style.display = 'none';
         document.getElementById('name-screen').style.display = 'block';
-        // 自動聚焦輸入框
         setTimeout(() => document.getElementById('user-name-input').focus(), 100);
     }
 
-    // 步驟 2: 開始測驗 (儲存名字)
     function startQuiz() {
-        // 獲取並處理名字
         const nameInput = document.getElementById('user-name-input');
         userName = nameInput.value.trim();
-        if (!userName) {
-            userName = "小小探險家"; // 預設名字
-        }
-
+        if (!userName) userName = "小小探險家";
         document.getElementById('name-screen').style.display = 'none';
         document.getElementById('quiz-screen').style.display = 'block';
         renderQuestion();
@@ -831,70 +627,43 @@
 
     function renderQuestion() {
         const q = questions[currentQ];
-        
-        // 更新 UI
         document.getElementById('progress').style.width = `${((currentQ) / questions.length) * 100}%`;
         document.getElementById('q-text').innerHTML = `Q${currentQ+1}. ${q.text}`;
-        
         const area = document.getElementById('options-area');
         area.innerHTML = '';
-
         q.options.forEach(opt => {
             const btn = document.createElement('div');
             btn.className = 'option-card';
             btn.innerText = opt.text;
-            // 傳入 btn 元素本身，以便添加 .selected 樣式
             btn.onclick = () => handleAnswer(opt.scores, btn);
             area.appendChild(btn);
         });
     }
 
     function handleAnswer(points, element) {
-        // 如果正在轉場中，忽略點擊
         if (isTransitioning) return;
         isTransitioning = true;
-
-        // 1. 選取狀態 (橘色高亮)
-        if (element) {
-            element.classList.add('selected');
-        }
-
-        // 2. 稍微停頓讓使用者看到選擇 (200ms)
+        if (element) element.classList.add('selected');
         setTimeout(() => {
-            const qContainer = document.getElementById('question-container');
-            
-            // 3. 淡出舊題目
-            qContainer.style.opacity = '0';
-            
-            // 4. 等待淡出動畫結束 (300ms)
+            document.getElementById('question-container').style.opacity = '0';
             setTimeout(() => {
-                // 累加分數
-                for(let key in points) {
-                    scores[key] += points[key];
-                }
-
+                for(let key in points) scores[key] += points[key];
                 currentQ++;
                 if (currentQ < questions.length) {
-                    renderQuestion(); // 渲染新題目
-                    
-                    // 5. 淡入新題目
-                    requestAnimationFrame(() => {
-                        qContainer.style.opacity = '1';
-                    });
+                    renderQuestion();
+                    requestAnimationFrame(() => document.getElementById('question-container').style.opacity = '1');
                 } else {
-                    showResult(); // 顯示結果
+                    showResult();
                 }
-                
                 isTransitioning = false;
-            }, 300); // 配合 CSS transition 時間
-        }, 200); // 點擊後的視覺暫留時間
+            }, 300);
+        }, 200);
     }
 
     function showResult() {
         document.getElementById('quiz-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
 
-        // 1. 找出最高分
         let maxVal = -1;
         let maxKey = 'C';
         for(let key in scores) {
@@ -904,47 +673,63 @@
             }
         }
 
-        // 2. 填入內容
         const data = archetypes[maxKey];
-        // 加入圖片到標題中
-        document.getElementById('r-title').innerHTML = `
-            <img src="${data.img}" alt="${data.title}" style="width: 50px; height: 50px; border-radius: 50%; border:3px solid #6EC6CA; object-fit: contain;">
-            ${data.title}
+        const colors = { C: "#6EC6CA", R: "#FF8E72", D: "#FFD56B", A: "#9575CD", T: "#4DB6AC", E: "#7986CB" };
+        const cardColor = colors[maxKey] || "#6EC6CA";
+        const celebsTags = data.celebs.map(c => `<span class="mini-tag">#${c}</span>`).join('');
+        
+        const cardHTML = `
+            <div class="collectible-card">
+                <div class="card-header-flex" style="background-color: ${cardColor};">
+                    <div class="card-avatar-left" style="border-color: ${cardColor};">
+                        <img src="${data.img}" alt="${data.title}">
+                    </div>
+                    <div class="card-info-right">
+                        <div class="card-badge">CREATIVITY TYPE</div>
+                        <h2 class="card-user-name">${userName}</h2>
+                        <div class="card-title">${data.title}</div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="card-chart-container">
+                        <canvas id="cardRadarChart"></canvas>
+                    </div>
+                    <div class="card-slogan" style="color: ${cardColor};">
+                        ${data.slogan}
+                    </div>
+                    <div class="tag-108">
+                        ${data.code108}
+                    </div>
+                    <div class="card-desc">
+                        ${data.desc}
+                    </div>
+                    <div class="card-footer-section">
+                        <div class="card-footer-label">SIMILAR MINDS / 創意夥伴</div>
+                        <div class="card-tags">
+                            ${celebsTags}
+                        </div>
+                    </div>
+                </div>
+            </div>
         `;
-        document.getElementById('r-slogan').innerText = data.slogan;
-        document.getElementById('r-desc').innerText = data.desc;
-        document.getElementById('r-108').innerHTML = `<span class="tag-108">${data.code108}</span>`;
 
-        // === 修改這裡：插入使用者名字 ===
-        const analysisTitle = document.getElementById('analysis-title-text');
-        analysisTitle.innerHTML = `
-            <span class="user-name-highlight">${userName}</span>
-            <span style="font-size: 0.9em; color: var(--text-main);">的</span>
-            <span style="font-size: 1.5rem; margin: 0 5px;">📝</span>
-            角色解析與魔法素養
-        `;
+        document.getElementById('card-placeholder').innerHTML = cardHTML;
 
-        // 3. 填入名人
-        const celebHTML = data.celebs.map(c => `<div class="celeb-tag">${c}</div>`).join('');
-        document.getElementById('r-celebs').innerHTML = celebHTML;
-
-        // 4. 繪製雷達圖
-        const ctx = document.getElementById('radarChart').getContext('2d');
+        const ctx = document.getElementById('cardRadarChart').getContext('2d');
         new Chart(ctx, {
             type: 'radar',
             data: {
-                labels: ['覺察力', '表達力', '驅動力', '合作力', '探索力', '實踐力'],
+                labels: ['覺察', '表達', '驅動', '合作', '探索', '實踐'],
                 datasets: [{
-                    label: '你的亮能光譜',
+                    label: '能力值',
                     data: [scores.C, scores.R, scores.D, scores.A, scores.T, scores.E],
-                    backgroundColor: 'rgba(255, 142, 114, 0.3)', /* 珊瑚紅透明 */
-                    borderColor: '#FF8E72', /* 珊瑚紅 */
-                    pointBackgroundColor: '#FFD56B', /* 黃色點點 */
+                    backgroundColor: `${cardColor}40`,
+                    borderColor: cardColor,
+                    pointBackgroundColor: cardColor,
                     pointBorderColor: '#FFF',
-                    pointHoverBackgroundColor: '#FFF',
-                    pointHoverBorderColor: '#FF8E72',
-                    borderWidth: 3,
-                    pointRadius: 5
+                    borderWidth: 2,
+                    pointRadius: 4
                 }]
             },
             options: {
@@ -952,12 +737,9 @@
                 maintainAspectRatio: false,
                 scales: {
                     r: {
-                        angleLines: { color: '#E0E0E0' }, 
-                        grid: { color: '#F0E6D2' },
-                        pointLabels: { 
-                            font: { size: 14, family: 'Comic Sans MS', weight: 'bold' }, 
-                            color: '#5D4037' 
-                        },
+                        angleLines: { color: '#EEE' }, 
+                        grid: { color: '#EEE' },
+                        pointLabels: { font: { size: 11, family: 'Comic Sans MS', weight: 'bold' }, color: '#555' },
                         ticks: { display: false }, 
                         suggestedMin: 0,
                         suggestedMax: 12
@@ -968,49 +750,23 @@
         });
     }
 
-    // === Modal Logic (新增) ===
     const modal = document.getElementById("info-modal");
     const modalText = document.getElementById("modal-text");
     const closeBtn = document.getElementsByClassName("close-modal")[0];
 
-    // 為所有亮能圖示添加點擊事件
     document.querySelectorAll('.spectrum-icon-item').forEach(item => {
         item.addEventListener('click', (e) => {
-            // 從 data-desc 屬性獲取完整說明
             const fullText = item.getAttribute('data-desc');
-            
-            // 自動分割標題與內文 (以第一個全形冒號為界)
             const parts = fullText.split('：');
-            let title = "";
-            let desc = "";
-            
-            if (parts.length > 1) {
-                title = parts[0];
-                desc = parts.slice(1).join('：'); // 避免內容中還有冒號被切斷
-            } else {
-                desc = fullText;
-            }
-
-            // 重新組裝 HTML
-            modalText.innerHTML = `
-                <div class="modal-title-text">${title}</div>
-                <div class="modal-body-text">${desc}</div>
-            `;
-            modal.style.display = "flex"; // 使用 flex 置中
+            let title = parts.length > 1 ? parts[0] : "";
+            let desc = parts.length > 1 ? parts.slice(1).join('：') : fullText;
+            modalText.innerHTML = `<div class="modal-title-text">${title}</div><div class="modal-body-text">${desc}</div>`;
+            modal.style.display = "flex";
         });
     });
 
-    // 關閉按鈕
-    closeBtn.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // 點擊 Modal 外部關閉
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
+    closeBtn.onclick = function() { modal.style.display = "none"; }
+    window.onclick = function(event) { if (event.target == modal) modal.style.display = "none"; }
 </script>
 
 </body>
