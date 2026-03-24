@@ -660,6 +660,25 @@
         }, 200);
     }
 
+    // === 送出資料至 Google 試算表 ===
+    function submitResult(name, type, typeName, scores) {
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzy7n5LXzVF0FSOHe28MVOGDJ2UDlbHutmU3cLreM-NsCpUrUUUlYq-GzwBzyY1zR3_/exec";
+
+        fetch(WEB_APP_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: name,
+                type: type,
+                typeName: typeName,
+                scores: scores
+            })
+        })
+        .then(() => console.log("✅ 資料已成功送出"))
+        .catch(err => console.error("❌ 資料送出失敗：", err));
+    }
+
     function showResult() {
         document.getElementById('quiz-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
@@ -674,6 +693,10 @@
         }
 
         const data = archetypes[maxKey];
+
+        // 送出結果至 Google 試算表
+        submitResult(userName, maxKey, data.title, scores);
+
         const colors = { C: "#6EC6CA", R: "#FF8E72", D: "#FFD56B", A: "#9575CD", T: "#4DB6AC", E: "#7986CB" };
         const cardColor = colors[maxKey] || "#6EC6CA";
         const celebsTags = data.celebs.map(c => `<span class="mini-tag">#${c}</span>`).join('');
